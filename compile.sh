@@ -23,9 +23,9 @@ else
 	exit 1
 fi
 
-mkdir build > /dev/null 2>$1
-mkdir build/debug > /dev/null 2>$1 
-mkdir build/release > /dev/null 2>$1 
+mkdir -p build 
+mkdir -p build/debug 
+mkdir -p build/release 
 
 time gcc source/main.c -o build/"$mode"/main $flags $common
 
