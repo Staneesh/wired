@@ -27,7 +27,11 @@ mkdir -p build
 mkdir -p build/debug 
 mkdir -p build/release 
 
-time gcc source/main.c -o build/"$mode"/main $flags $common
+printf "Building server..."
+time gcc source/server.c -o build/"$mode"/server $flags $common 
+
+printf "\nBuilding client..."
+time gcc source/client.c -o build/"$mode"/client $flags $common
 
 # TODO(stanisz): i dont know why these are created, so this
 # deletion is a temporary hotfix
