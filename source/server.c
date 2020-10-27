@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct ListenerWork
 {
@@ -41,9 +42,8 @@ void listener(struct ListenerWork* work)
 	
 }
 
-void listen_to_clients()
+void listen_to_clients(const u32 n_listeners)
 {
-	const u8 n_listeners = 2;
 	struct ListenerWork works[n_listeners];
 
 	pthread_t thread_ids[n_listeners];
@@ -66,10 +66,16 @@ void listen_to_clients()
 	}
 }
 
-int main()
+int main(int argc, char** argv)
 {
+	if (argc != 2)
+	{
+		printf("Usage: ./server N_CLIENTS\n");
+		return -1;
+	}
+
 	
-	listen_to_clients();
+	listen_to_clients(atoi(argv[1]));
 
 	return 0;
 }
