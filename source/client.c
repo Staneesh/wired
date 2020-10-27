@@ -33,8 +33,14 @@ int main(int argc, char** argv)
 
 	assert(connection_status != -1);
 
-	char client_mesage[256] = "HELLO!\0";
-	send(network_socket, &client_mesage, sizeof(client_mesage), 0);
+	char client_message[256] = "HELLO!\0";
+	char server_message[256] = {};	
+	while (1)
+	{
+		send(network_socket, &client_message, sizeof(client_message), 0);
+		recv(network_socket, &server_message, sizeof(server_message), 0);
+		printf("Client on port [%d]: Server says: %s", port, server_message);
+	}
 
 	close(network_socket);
 
