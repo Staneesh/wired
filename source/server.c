@@ -16,12 +16,14 @@
 struct ListenerWork
 {
 	u32 port;
+	i32 sock;
 	u8 client_message[256];
 };
 
 struct SenderWork
 {
 	u32 port;
+	i32 sock;
 	u8 server_message[256];
 };
 
@@ -29,26 +31,10 @@ void listener(struct ListenerWork* work)
 {
 	memset(work->client_message, 0, 256);
 
-	i32 sock = socket(AF_INET, SOCK_STREAM, 0);
-
-	struct sockaddr_in server_address;
-	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(work->port);
-	server_address.sin_addr.s_addr = INADDR_ANY;
-
-	bind(sock, (struct sockaddr *)&server_address, sizeof(server_address));
-
-	listen(sock, 5);
-
-	int client_socket = accept(sock, NULL, NULL);
-
-	recv(client_socket, work->client_message, sizeof(work->client_message), 0);
-
-	close(sock);
-	
+	recv(work->sock, work->client_message, sizeof(work->client_message), 0);
 }
 
-void listen_to_clients(const u32 n_listeners)
+void listen_to_clients(i32 *sockets, const u32 n_listeners)
 {
 	struct ListenerWork works[n_listeners];
 
@@ -57,6 +43,7 @@ void listen_to_clients(const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		works[i].port = 9002 + i;
+		works[i].sock = sockets[i];
 
 		pthread_create(&thread_ids[i], 0, (void *)&listener, &works[i]);
 	}
@@ -74,25 +61,10 @@ void listen_to_clients(const u32 n_listeners)
 
 void sender(struct SenderWork* work)
 {
-	i32 sock = socket(AF_INET, SOCK_STREAM, 0);
-
-	struct sockaddr_in client_address;
-	client_address.sin_family = AF_INET;
-	client_address.sin_port = htons(work->port);
-	client_address.sin_addr.s_addr = INADDR_ANY;
-
-	bind(sock, (struct sockaddr *)&client_address, sizeof(client_address));
-
-	listen(sock, 5);
-
-	int client_socket = accept(sock, NULL, NULL);
-
-	send(client_socket, work->server_message, sizeof(work->server_message), 0);
-
-	close(sock);
+	send(work->sock, work->server_message, sizeof(work->server_message), 0);
 }
 
-void send_to_clients(const u32 n_senders)
+void send_to_clients(i32 *sockets, const u32 n_senders)
 {
 	struct SenderWork works[n_senders];
 
@@ -101,8 +73,11 @@ void send_to_clients(const u32 n_senders)
 	for(u32 i = 0; i < n_senders; ++i)
 	{
 		works[i].port = 9002 + i;
+		works[i].sock = sockets[i];
+
 		u8 msg[50] = "SERVER TALKS!\0";
 		memcpy(&works[i].server_message, msg, sizeof(msg));
+
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
 	}
 
@@ -112,6 +87,44 @@ void send_to_clients(const u32 n_senders)
 	}
 }
 
+#if 1
+void setup_sockets(i32 *sockets, u32 n_sockets)
+{
+	for (u32 i = 0; i < n_sockets; ++i)
+	{
+		i32 *sock = &sockets[i];
+
+		*sock = socket(AF_INET, SOCK_STREAM, 0);
+		assert(*sock != -1);
+
+		struct sockaddr_in client_address = {};
+		client_address.sin_family = AF_INET;
+		client_address.sin_port = htons(9002 + i);
+		client_address.sin_addr.s_addr = INADDR_ANY;
+
+		assert(bind(*sock, 
+					(struct sockaddr *)&client_address, 
+					sizeof(client_address))
+				!= -1);
+
+		assert(listen(*sock, 5) != -1);
+
+		socklen_t len = sizeof(client_address);
+		assert(accept(*sock, 
+					(struct sockaddr *)&client_address, 
+					&len) 
+				!= -1);
+	}
+}
+#endif
+
+void cleanup_sockets(i32 *sockets)
+{
+	for (i32 i = 0; i < 8; ++i)
+	{
+		close(sockets[i]);
+	}
+}
 int main(int argc, char** argv)
 {
 	if (argc != 2)
@@ -121,9 +134,16 @@ int main(int argc, char** argv)
 	}
 
 	const u32 n_clients = atoi(argv[1]);
-	
-	listen_to_clients(n_clients);
-	send_to_clients(n_clients);
 
+	i32 sockets[8] = {};
+	setup_sockets(sockets, n_clients);
+
+	while(1)
+	{
+		listen_to_clients(sockets, n_clients);
+		send_to_clients(sockets, n_clients);
+	}
+	
+	cleanup_sockets(sockets);
 	return 0;
 }

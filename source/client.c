@@ -39,6 +39,8 @@ int main(int argc, char** argv)
 	{
 		send(network_socket, &client_message, sizeof(client_message), 0);
 		recv(network_socket, &server_message, sizeof(server_message), 0);
+
+		server_message[sizeof(server_message)-1] = '\0';
 		printf("Client on port [%d]: Server says: %s", port, server_message);
 	}
 
