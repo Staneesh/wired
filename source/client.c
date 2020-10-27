@@ -9,16 +9,23 @@
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-int main()
+int main(int argc, char** argv)
 {
+	i32 port = 9002;
+	if (argc > 1)
+	{
+		port = atoi(argv[1]);
+	}
+
 	i32 network_socket;
 	network_socket = socket(AF_INET, SOCK_STREAM, 0); 
 	assert(network_socket != -1);
 
 	struct sockaddr_in server_address;
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(9002);
+	server_address.sin_port = htons(port);
 	server_address.sin_addr.s_addr = INADDR_ANY;
 
 	i32 connection_status = connect(network_socket, 
@@ -26,10 +33,8 @@ int main()
 
 	assert(connection_status != -1);
 
-	char server_response[256];
-	recv(network_socket, &server_response, sizeof(server_response), 0);
-
-	printf("Server: %s\n", server_response);
+	char client_mesage[256] = "HELLO!\0";
+	send(network_socket, &client_mesage, sizeof(client_mesage), 0);
 
 	close(network_socket);
 
