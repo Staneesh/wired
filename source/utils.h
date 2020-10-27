@@ -16,6 +16,7 @@ typedef double real64;
 
 #define LOG_INT(x) printf("Line %d in file %s says: %s = %i\n", \
 		__LINE__, __FILE__, #x, x);
+
 #define LOG_UINT(x) printf("Line %d in file %s says: %s = %u\n", \
 		__LINE__, __FILE__, #x, x);
 
@@ -27,6 +28,9 @@ typedef double real64;
  
 #define LOG_STRING(x) printf("Line %d in file %s says: %s = %s\n", \
 		__LINE__, __FILE__, #x, x);
+
+#define LOG(x) printf("Line %d in file %s says: %s\n", \
+		__LINE__, __FILE__, x);
 
 #define LOG_FLOAT(x) printf("Line %d in file %s says: %s = %f\n", \
 		__LINE__, __FILE__, #x, x);

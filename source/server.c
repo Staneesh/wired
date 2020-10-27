@@ -31,7 +31,10 @@ void listener(struct ListenerWork* work)
 {
 	memset(work->client_message, 0, 256);
 
+	LOG("Listener begins recv...");
 	recv(work->sock, work->client_message, sizeof(work->client_message), 0);
+	LOG("Listener ends recv.");
+	LOG_STRING(work->client_message);
 }
 
 void listen_to_clients(i32 *sockets, const u32 n_listeners)
