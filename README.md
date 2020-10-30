@@ -4,9 +4,10 @@ Deep, deep in development...
 
 This game uses:
 
-- [SDL] to handle windows
+- **SDL** to handle windows
 
-apt: `sudo apt install libsdl2-dev`
+apt: `sudo apt install libsdl2-dev`  
+
 pacman: `pacman -S sdl2`
 
-- [pthread] for multithreading (linux specific)
+- **pthread** for multithreading (linux specific)
