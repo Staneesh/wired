@@ -37,11 +37,14 @@ int main(int argc, char** argv)
 	char server_message[256] = {};	
 	while (1)
 	{
+		LOG("Beginning send...");
 		send(network_socket, &client_message, sizeof(client_message), 0);
-		//recv(network_socket, &server_message, sizeof(server_message), 0);
+		LOG("Send ended. Beginning recv...");
+		recv(network_socket, &server_message, sizeof(server_message), 0);
+		LOG("Recv ended.");
 
-		//server_message[sizeof(server_message)-1] = '\0';
-		//printf("Client on port [%d]: Server says: %s", port, server_message);
+		server_message[sizeof(server_message)-1] = '\0';
+		printf("Client on port [%d]: Server says: %s\n", port, server_message);
 	}
 
 	close(network_socket);

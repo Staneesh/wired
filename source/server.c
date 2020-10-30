@@ -32,7 +32,8 @@ void listener(struct ListenerWork* work)
 	memset(work->client_message, 0, 256);
 
 	LOG("Listener begins recv...");
-	recv(work->sock, work->client_message, sizeof(work->client_message), 0);
+	assert(recv(work->sock, work->client_message,
+				sizeof(work->client_message), 0) != -1);
 	LOG("Listener ends recv.");
 	LOG_STRING(work->client_message);
 }
@@ -64,11 +65,16 @@ void listen_to_clients(i32 *sockets, const u32 n_listeners)
 
 void sender(struct SenderWork* work)
 {
-	send(work->sock, work->server_message, sizeof(work->server_message), 0);
+	LOG("SENDING");
+	assert (send(work->sock, work->server_message, 
+				sizeof(work->server_message), 0) != -1);
+
+	LOG("ENDED SEND");
 }
 
 void send_to_clients(i32 *sockets, const u32 n_senders)
 {
+	LOG("BEGINNING SEND");
 	struct SenderWork works[n_senders];
 
 	pthread_t thread_ids[n_senders];
@@ -143,6 +149,7 @@ int main(int argc, char** argv)
 
 	while(1)
 	{
+		LOG("Server spins...");
 		listen_to_clients(sockets, n_clients);
 		send_to_clients(sockets, n_clients);
 	}
