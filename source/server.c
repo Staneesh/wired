@@ -31,11 +31,10 @@ void listener(struct ListenerWork* work)
 {
 	memset(work->client_message, 0, 256);
 
-	LOG("Listener begins recv...");
-	assert(recv(work->sock, work->client_message,
-				sizeof(work->client_message), 0) != -1);
-	LOG("Listener ends recv.");
-	LOG_STRING(work->client_message);
+	assert(
+			recv(work->sock, work->client_message,
+				sizeof(work->client_message), 0) != -1
+			);
 }
 
 void listen_to_clients(i32 *sockets, const u32 n_listeners)
@@ -65,16 +64,14 @@ void listen_to_clients(i32 *sockets, const u32 n_listeners)
 
 void sender(struct SenderWork* work)
 {
-	LOG("SENDING");
-	assert (send(work->sock, work->server_message, 
-				sizeof(work->server_message), 0) != -1);
-
-	LOG("ENDED SEND");
+	assert(
+			send(work->sock, work->server_message, 
+				sizeof(work->server_message), 0) != -1
+			);
 }
 
 void send_to_clients(i32 *sockets, const u32 n_senders)
 {
-	LOG("BEGINNING SEND");
 	struct SenderWork works[n_senders];
 
 	pthread_t thread_ids[n_senders];
@@ -96,18 +93,17 @@ void send_to_clients(i32 *sockets, const u32 n_senders)
 	}
 }
 
-#if 1
 void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 {
 	for (u32 i = 0; i < n_sockets; ++i)
 	{
-		i32 *sock = &sockets[i];
+		i32 sock = sockets[i];
 
-		*sock = socket(AF_INET, SOCK_STREAM, 0);
-		assert(*sock != -1);
+		sock = socket(AF_INET, SOCK_STREAM, 0);
+		assert(sock != -1);
 
 		int opt = 1;
-		assert(setsockopt(*sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+		assert(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
 					&opt, sizeof(opt)) != -1);
 
 		struct sockaddr_in client_address = {};
@@ -115,22 +111,22 @@ void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 		client_address.sin_port = htons(9002 + i);
 		client_address.sin_addr.s_addr = INADDR_ANY;
 
-		assert(bind(*sock, 
+		assert(bind(sock, 
 					(struct sockaddr *)&client_address, 
 					sizeof(client_address))
 				!= -1);
 
-		assert(listen(*sock, 5) != -1);
+		assert(listen(sock, 5) != -1);
 
 		socklen_t len = sizeof(client_address);
+
 		assert(
-				(new_sockets[i] = accept(*sock, 
+				(new_sockets[i] = accept(sock, 
 					(struct sockaddr *)&client_address, 
 					&len)) != -1
 				);
 	}
 }
-#endif
 
 void cleanup_sockets(i32 *sockets)
 {
@@ -155,7 +151,6 @@ int main(int argc, char** argv)
 
 	while(1)
 	{
-		LOG("Server spins...");
 		listen_to_clients(new_sockets, n_clients);
 		send_to_clients(new_sockets, n_clients);
 	}
