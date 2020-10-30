@@ -128,15 +128,15 @@ void cleanup_sockets(i32 *sockets)
 		close(sockets[i]);
 	}
 }
+
 int main(int argc, char** argv)
 {
-	if (argc != 2)
-	{
-		printf("Usage: ./server N_CLIENTS\n");
-		return -1;
-	}
+	u32 n_clients = 1;
 
-	const u32 n_clients = atoi(argv[1]);
+	if (argc == 2)
+	{
+		n_clients = atoi(argv[1]);
+	}
 
 	i32 sockets[8] = {};
 	setup_sockets(sockets, n_clients);
