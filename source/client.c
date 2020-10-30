@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#define NETWORKED 0
+
 i32 setup_socket(u32 port)
 {
 	i32 network_socket = socket(AF_INET, SOCK_STREAM, 0); 
@@ -49,8 +51,7 @@ int main(int argc, char** argv)
 	UNUSED(argc);
 	UNUSED(argv);
 
-#if 0
-
+#if NETWORKED
 	i32 port = 9002;
 	if (argc > 1)
 	{
@@ -61,18 +62,36 @@ int main(int argc, char** argv)
 	char server_message[256] = {};	
 
 	i32 network_socket = setup_socket(port);
+#endif
 
-	while (1)
+	u8 is_running = 1;
+
+	while (is_running)
 	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event) != 0)
+		{
+			if (event.type == SDL_QUIT)
+			{
+				is_running = 0;
+			}
+		}
+
+		if (is_running == 0) break;
+
+#if NETWORKED
 		send(network_socket, &client_message, sizeof(client_message), 0);
 		recv(network_socket, &server_message, sizeof(server_message), 0);
 
 		server_message[sizeof(server_message)-1] = '\0';
 		printf("Client on port [%d]: Server says: %s\n", port, server_message);
+#endif
+
+
 	}
 
+#if NETWORKED
 	close(network_socket);
-
 #endif
 
 	SDL_Quit();
