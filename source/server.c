@@ -97,7 +97,7 @@ void send_to_clients(i32 *sockets, const u32 n_senders)
 }
 
 #if 1
-void setup_sockets(i32 *sockets, u32 n_sockets)
+void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 {
 	for (u32 i = 0; i < n_sockets; ++i)
 	{
@@ -105,6 +105,10 @@ void setup_sockets(i32 *sockets, u32 n_sockets)
 
 		*sock = socket(AF_INET, SOCK_STREAM, 0);
 		assert(*sock != -1);
+
+		int opt = 1;
+		assert(setsockopt(*sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+					&opt, sizeof(opt)) != -1);
 
 		struct sockaddr_in client_address = {};
 		client_address.sin_family = AF_INET;
@@ -119,10 +123,11 @@ void setup_sockets(i32 *sockets, u32 n_sockets)
 		assert(listen(*sock, 5) != -1);
 
 		socklen_t len = sizeof(client_address);
-		assert(accept(*sock, 
+		assert(
+				(new_sockets[i] = accept(*sock, 
 					(struct sockaddr *)&client_address, 
-					&len) 
-				!= -1);
+					&len)) != -1
+				);
 	}
 }
 #endif
@@ -145,13 +150,14 @@ int main(int argc, char** argv)
 	}
 
 	i32 sockets[8] = {};
-	setup_sockets(sockets, n_clients);
+	i32 new_sockets[8] = {};
+	setup_sockets(sockets, new_sockets, n_clients);
 
 	while(1)
 	{
 		LOG("Server spins...");
-		listen_to_clients(sockets, n_clients);
-		send_to_clients(sockets, n_clients);
+		listen_to_clients(new_sockets, n_clients);
+		send_to_clients(new_sockets, n_clients);
 	}
 	
 	cleanup_sockets(sockets);
