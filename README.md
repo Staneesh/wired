@@ -10,4 +10,3 @@ apt: `sudo apt install libsdl2-dev`
 
 pacman: `pacman -S sdl2`
 
-- **pthread** for multithreading (linux specific)
