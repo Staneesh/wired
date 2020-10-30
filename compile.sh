@@ -10,7 +10,7 @@ fi
 
 mode=$1
 flags=""
-common="-lm -pthread -march=native"
+common="-lm -pthread -march=native -lSDL2 -lSDL2main"
 
 if [ $mode == "debug" ]
 then

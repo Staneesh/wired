@@ -6,21 +6,16 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include <SDL2/SDL.h>
+
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char** argv)
+i32 setup_socket(u32 port)
 {
-	i32 port = 9002;
-	if (argc > 1)
-	{
-		port = atoi(argv[1]);
-	}
-
-	i32 network_socket;
-	network_socket = socket(AF_INET, SOCK_STREAM, 0); 
+	i32 network_socket = socket(AF_INET, SOCK_STREAM, 0); 
 	assert(network_socket != -1);
 
 	struct sockaddr_in server_address;
@@ -33,8 +28,40 @@ int main(int argc, char** argv)
 
 	assert(connection_status != -1);
 
+	return network_socket;
+}
+
+void init_sdl(SDL_Window *window)
+{
+	SDL_Init(SDL_INIT_VIDEO);
+
+	window = SDL_CreateWindow("Wired", 
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+			1280, 720, 0);
+	UNUSED(window);
+}
+
+int main(int argc, char** argv)
+{
+	SDL_Window *window = 0;
+	init_sdl(window);
+
+	UNUSED(argc);
+	UNUSED(argv);
+
+#if 0
+
+	i32 port = 9002;
+	if (argc > 1)
+	{
+		port = atoi(argv[1]);
+	}
+
 	char client_message[256] = "HELLO!\0";
 	char server_message[256] = {};	
+
+	i32 network_socket = setup_socket(port);
+
 	while (1)
 	{
 		send(network_socket, &client_message, sizeof(client_message), 0);
@@ -45,6 +72,10 @@ int main(int argc, char** argv)
 	}
 
 	close(network_socket);
+
+#endif
+
+	SDL_Quit();
 
 	return 0;
 }
