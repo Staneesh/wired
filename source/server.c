@@ -13,10 +13,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+//NOTE(stanisz): Listeners and senders are separated now,
+// maybe it would be more efficient to create a thread 
+// and have it communicate both ways with the client.
 struct ListenerWork
 {
 	u32 port;
 	i32 sock;
+	//NOTE(stanisz): This message will be recieved by the server.
 	u8 client_message[256];
 };
 
@@ -24,6 +28,7 @@ struct SenderWork
 {
 	u32 port;
 	i32 sock;
+	//NOTE(stanisz): This message will be recieved by the client.
 	u8 server_message[256];
 };
 
@@ -103,6 +108,7 @@ void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 		assert(sock != -1);
 
 		int opt = 1;
+		//TODO(stanisz): What are those flags exactly?
 		assert(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
 					&opt, sizeof(opt)) != -1);
 
@@ -116,10 +122,13 @@ void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 					sizeof(client_address))
 				!= -1);
 
+		//TODO(stanisz): Whats the 5?
 		assert(listen(sock, 5) != -1);
 
 		socklen_t len = sizeof(client_address);
 
+		//NOTE(stanisz): Accept happens here, so before everything starts
+		// the clients need to all be accepted. Right...?
 		assert(
 				(new_sockets[i] = accept(sock, 
 					(struct sockaddr *)&client_address, 
@@ -130,6 +139,8 @@ void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 
 void cleanup_sockets(i32 *sockets)
 {
+	//TODO(stanisz): Is it okay to close sockets, that
+	// are 0 (not created at all)?
 	for (i32 i = 0; i < 8; ++i)
 	{
 		close(sockets[i]);
@@ -156,5 +167,6 @@ int main(int argc, char** argv)
 	}
 	
 	cleanup_sockets(sockets);
+
 	return 0;
 }
