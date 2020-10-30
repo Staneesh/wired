@@ -2,6 +2,7 @@
 // I dont see any reasons to do incremental building, 
 // so until then - its unity.
 #include "utils.c"
+#include "shared.c"
 
 #include <sys/socket.h>
 #include <netinet/in.h>

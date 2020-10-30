@@ -2,6 +2,7 @@
 // I dont see any reasons to do incremental building, 
 // so until then - its unity.
 #include "utils.c"
+#include "shared.c"
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -13,7 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define NETWORKED 0
+#define NETWORKED 1
 
 i32 setup_socket(u32 port)
 {
@@ -58,7 +59,7 @@ int main(int argc, char** argv)
 		port = atoi(argv[1]);
 	}
 
-	char client_message[256] = "HELLO!\0";
+	char client_message[256] = {};
 	char server_message[256] = {};	
 
 	i32 network_socket = setup_socket(port);
@@ -77,7 +78,8 @@ int main(int argc, char** argv)
 			}
 		}
 
-		if (is_running == 0) break;
+
+		set_message(client_message, DISCONNECTED);
 
 #if NETWORKED
 		send(network_socket, &client_message, sizeof(client_message), 0);
