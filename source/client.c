@@ -71,11 +71,9 @@ int main(int argc, char** argv)
 			if (event.type == SDL_QUIT)
 			{
 				is_running = 0;
+				set_message(client_message, DISCONNECTED);
 			}
 		}
-
-
-		set_message(client_message, DISCONNECTED);
 
 		send(network_socket, &client_message, sizeof(client_message), 0);
 		recv(network_socket, &server_message, sizeof(server_message), 0);

@@ -43,7 +43,8 @@ void listener(struct ListenerWork* work)
 			);
 }
 
-void listen_to_clients(i32 *sockets, const u32 n_listeners)
+void listen_to_clients(i32 *sockets, const u32 n_listeners, 
+		char client_messages[8][256])
 {
 	struct ListenerWork works[n_listeners];
 
@@ -65,6 +66,8 @@ void listen_to_clients(i32 *sockets, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		printf("From port [%d]: %s\n", 9002 + i, works[i].client_message);
+		memcpy(client_messages[i], works[i].client_message, 
+				sizeof(works[i].client_message));
 	}
 }
 
@@ -161,9 +164,21 @@ int main(int argc, char** argv)
 	i32 new_sockets[8] = {};
 	setup_sockets(sockets, new_sockets, n_clients);
 
+	//NOTE(stanisz): Each client (out of 8 maximum) has their 
+	// 256 chars of data.
 	while(1)
 	{
-		listen_to_clients(new_sockets, n_clients);
+		char client_messages[8][256] = {};
+		listen_to_clients(new_sockets, n_clients, client_messages);
+
+		for (u32 i = 0; i < n_clients; ++i)
+		{
+			if (client_messages[i][DISCONNECTED] == 1)
+			{
+				
+			}
+		}
+
 		send_to_clients(new_sockets, n_clients);
 	}
 	
