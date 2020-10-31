@@ -22,22 +22,22 @@ struct Client
 	u32 disconnected;
 };
 
-i32 setup_socket(u32 port)
+void setup_socket(struct Client* client)
 {
-	i32 network_socket = socket(AF_INET, SOCK_STREAM, 0); 
-	assert(network_socket != -1);
+	client->sock = socket(AF_INET, SOCK_STREAM, 0); 
+	assert(client->sock != -1);
 
 	struct sockaddr_in server_address;
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(port);
+	server_address.sin_port = htons(client->port);
 	server_address.sin_addr.s_addr = INADDR_ANY;
 
-	i32 connection_status = connect(network_socket, 
+	i32 connection_status = connect(client->sock, 
 			(struct sockaddr *)&server_address, sizeof(server_address));
 
 	assert(connection_status != -1);
 
-	return network_socket;
+	client->disconnected = 0;
 }
 
 void init_sdl(SDL_Window *window)
@@ -75,8 +75,8 @@ int main(int argc, char** argv)
 	{
 		client.port = atoi(argv[1]);
 	}
-	client.sock = setup_socket(client.port);
 	bzero(client.message, sizeof(client.message));
+	setup_socket(&client);
 
 	char server_message[256] = {};	
 

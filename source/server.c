@@ -175,7 +175,7 @@ int main(int argc, char** argv)
 		{
 			if (client_messages[i][DISCONNECTED] == 1)
 			{
-				
+				LOG("CLIENT DISCONNECTED");				
 			}
 		}
 
