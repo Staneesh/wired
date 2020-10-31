@@ -50,6 +50,14 @@ void init_sdl(SDL_Window *window)
 	UNUSED(window);
 }
 
+void update_client_message(struct Client *client)
+{
+	if (client->disconnected)
+	{
+		set_message(client->message, DISCONNECTED);
+	}
+}
+
 int main(int argc, char** argv)
 {
 	SDL_Window *window = 0;
@@ -68,6 +76,7 @@ int main(int argc, char** argv)
 		client.port = atoi(argv[1]);
 	}
 	client.sock = setup_socket(client.port);
+	bzero(client.message, sizeof(client.message));
 
 	char server_message[256] = {};	
 
@@ -81,9 +90,11 @@ int main(int argc, char** argv)
 			if (event.type == SDL_QUIT)
 			{
 				is_running = 0;
-				set_message(client.message, DISCONNECTED);
+				client.disconnected = 1;
 			}
 		}
+
+		update_client_message(&client);
 
 		send(client.sock, client.message, sizeof(client.message), 0);
 		recv(client.sock, &server_message, sizeof(server_message), 0);
