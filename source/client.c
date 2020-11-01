@@ -14,14 +14,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-struct Client
-{
-	char message[256];
-	i32 port;
-	i32 sock;
-	u32 disconnected;
-};
-
 void setup_socket(struct Client* client)
 {
 	client->sock = socket(AF_INET, SOCK_STREAM, 0); 
@@ -48,14 +40,6 @@ void init_sdl(SDL_Window *window)
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 			1280, 720, 0);
 	UNUSED(window);
-}
-
-void update_client_message(struct Client *client)
-{
-	if (client->disconnected)
-	{
-		set_message(client->message, DISCONNECTED);
-	}
 }
 
 int main(int argc, char** argv)
