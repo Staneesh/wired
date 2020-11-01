@@ -14,8 +14,6 @@ typedef struct Client
 	u32 disconnected;
 }Client;
 
-void set_message(char *client_message, enum MessageType t);
-
 void update_client_message(struct Client *client);
 
 #endif

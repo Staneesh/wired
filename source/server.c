@@ -1,9 +1,3 @@
-//NOTE(stanisz): Yes, this is a unity build. 
-// I dont see any reasons to do incremental building, 
-// so until then - its unity.
-#include "utils.c"
-#include "shared.c"
-
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
@@ -13,6 +7,12 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+
+//NOTE(stanisz): Yes, this is a unity build. 
+// I dont see any reasons to do incremental building, 
+// so until then - its unity.
+#include "utils.c"
+#include "shared.c"
 
 //NOTE(stanisz): Listeners and senders are separated now,
 // maybe it would be more efficient to create a thread 
@@ -65,6 +65,8 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		printf("From port [%d]: %s\n", 9002 + i, works[i].client_message);
+		memcpy(clients[i].message, works[i].client_message,
+				sizeof(works[i].client_message));
 	}
 }
 
@@ -146,6 +148,17 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 	}
 }
 
+void parse_clients(struct Client *clients, u32 n_clients)
+{
+	for (u32 i = 0; i < n_clients; ++i)
+	{
+		if (clients[i].message[DISCONNECTED] == '1')
+		{
+			clients[i].disconnected = 1;
+		}
+	}
+}
+
 int main(int argc, char** argv)
 {
 	u32 n_clients = 1;
@@ -162,14 +175,15 @@ int main(int argc, char** argv)
 	// 256 chars of data.
 	while(1)
 	{
-		char client_messages[8][256] = {};
 		listen_to_clients(clients, n_clients);
+
+		parse_clients(clients, n_clients);
 
 		for (u32 i = 0; i < n_clients; ++i)
 		{
-			if (client_messages[i][DISCONNECTED] == 1)
+			if (clients[i].disconnected == 1)
 			{
-				LOG("CLIENT DISCONNECTED");				
+				LOG("Client disconnected.");
 			}
 		}
 

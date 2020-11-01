@@ -1,15 +1,11 @@
 #include "shared.h"
 
-void set_message(char *client_message, enum MessageType t)
-{
-	client_message[t] = 1;
-}
-
 void update_client_message(struct Client *client)
 {
-	if (client->disconnected)
+	bzero(client->message, sizeof(client->message));
+	if (client->disconnected == 1)
 	{
-		set_message(client->message, DISCONNECTED);
+		client->message[DISCONNECTED] = '1';
 	}
 }
 

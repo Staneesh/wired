@@ -1,9 +1,3 @@
-//NOTE(stanisz): Yes, this is a unity build. 
-// I dont see any reasons to do incremental building, 
-// so until then - its unity.
-#include "utils.c"
-#include "shared.c"
-
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -13,6 +7,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+//NOTE(stanisz): Yes, this is a unity build. 
+// I dont see any reasons to do incremental building, 
+// so until then - its unity.
+#include "utils.c"
+#include "shared.c"
 
 void setup_socket(struct Client* client)
 {
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
 
 		update_client_message(&client);
 
-		send(client.sock, client.message, sizeof(client.message), 0);
+		send(client.sock, &client.message, sizeof(client.message), 0);
 		recv(client.sock, &server_message, sizeof(server_message), 0);
 
 		server_message[sizeof(server_message)-1] = '\0';
