@@ -152,9 +152,16 @@ void parse_clients(struct Client *clients, u32 n_clients)
 {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
+		clients[i].disconnected = 0;
+		clients[i].key_up_pressed = 0;
+
 		if (clients[i].message[DISCONNECTED] == '1')
 		{
 			clients[i].disconnected = 1;
+		}
+		if (clients[i].message[KEYUP] == '1')
+		{
+			clients[i].key_up_pressed = 1;
 		}
 	}
 }
@@ -184,6 +191,10 @@ int main(int argc, char** argv)
 			if (clients[i].disconnected == 1)
 			{
 				LOG("Client disconnected.");
+			}
+			if (clients[i].key_up_pressed == 1)
+			{
+				LOG("Key UP pressed.");
 			}
 		}
 

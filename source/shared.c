@@ -7,5 +7,9 @@ void update_client_message(struct Client *client)
 	{
 		client->message[DISCONNECTED] = '1';
 	}
+	if (client->key_up_pressed == 1)
+	{
+		client->message[KEYUP] = '1';
+	}
 }
 

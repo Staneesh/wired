@@ -75,6 +75,23 @@ int main(int argc, char** argv)
 			{
 				is_running = 0;
 				client.disconnected = 1;
+				break;
+			}
+
+			if (event.type == SDL_KEYDOWN)
+			{
+				if (event.key.keysym.sym == SDLK_UP)
+				{
+					client.key_up_pressed = 1;
+				}
+			}
+
+			if (event.type == SDL_KEYUP)
+			{
+				if (event.key.keysym.sym == SDLK_UP)
+				{
+					client.key_up_pressed = 0;
+				}
 			}
 		}
 
