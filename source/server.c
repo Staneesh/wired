@@ -43,8 +43,7 @@ void listener(struct ListenerWork* work)
 			);
 }
 
-void listen_to_clients(i32 *sockets, const u32 n_listeners, 
-		char client_messages[8][256])
+void listen_to_clients(struct Client *clients, const u32 n_listeners)
 {
 	struct ListenerWork works[n_listeners];
 
@@ -53,7 +52,7 @@ void listen_to_clients(i32 *sockets, const u32 n_listeners,
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		works[i].port = 9002 + i;
-		works[i].sock = sockets[i];
+		works[i].sock = clients[i].sock;
 
 		pthread_create(&thread_ids[i], 0, (void *)&listener, &works[i]);
 	}
@@ -66,8 +65,6 @@ void listen_to_clients(i32 *sockets, const u32 n_listeners,
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		printf("From port [%d]: %s\n", 9002 + i, works[i].client_message);
-		memcpy(client_messages[i], works[i].client_message, 
-				sizeof(works[i].client_message));
 	}
 }
 
@@ -79,16 +76,16 @@ void sender(struct SenderWork* work)
 			);
 }
 
-void send_to_clients(i32 *sockets, const u32 n_senders)
+void send_to_clients(struct Client *clients, const u32 n_clients)
 {
-	struct SenderWork works[n_senders];
+	struct SenderWork works[n_clients];
 
-	pthread_t thread_ids[n_senders];
+	pthread_t thread_ids[n_clients];
 
-	for(u32 i = 0; i < n_senders; ++i)
+	for(u32 i = 0; i < n_clients; ++i)
 	{
 		works[i].port = 9002 + i;
-		works[i].sock = sockets[i];
+		works[i].sock = clients[i].sock;
 
 		u8 msg[50] = "SERVER TALKS!\0";
 		memcpy(&works[i].server_message, msg, sizeof(msg));
@@ -96,19 +93,17 @@ void send_to_clients(i32 *sockets, const u32 n_senders)
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
 	}
 
-	for (u32 i = 0; i < n_senders; ++i)
+	for (u32 i = 0; i < n_clients; ++i)
 	{
 		pthread_join(thread_ids[i], 0);
 	}
 }
 
-void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
+void setup_sockets(struct Client *clients, u32 n_clients)
 {
-	for (u32 i = 0; i < n_sockets; ++i)
+	for (u32 i = 0; i < n_clients; ++i)
 	{
-		i32 sock = sockets[i];
-
-		sock = socket(AF_INET, SOCK_STREAM, 0);
+		i32 sock = socket(AF_INET, SOCK_STREAM, 0);
 		assert(sock != -1);
 
 		int opt = 1;
@@ -134,20 +129,20 @@ void setup_sockets(i32 *sockets, i32 *new_sockets, u32 n_sockets)
 		//NOTE(stanisz): Accept happens here, so before everything starts
 		// the clients need to all be accepted. Right...?
 		assert(
-				(new_sockets[i] = accept(sock, 
+				(clients[i].sock = accept(sock, 
 					(struct sockaddr *)&client_address, 
 					&len)) != -1
 				);
 	}
 }
 
-void cleanup_sockets(i32 *sockets)
+void cleanup_sockets(struct Client *clients, u32 n_clients)
 {
 	//TODO(stanisz): Is it okay to close sockets, that
 	// are 0 (not created at all)?
-	for (i32 i = 0; i < 8; ++i)
+	for (u32 i = 0; i < n_clients; ++i)
 	{
-		close(sockets[i]);
+		close(clients[i].sock);
 	}
 }
 
@@ -160,16 +155,15 @@ int main(int argc, char** argv)
 		n_clients = atoi(argv[1]);
 	}
 
-	i32 sockets[8] = {};
-	i32 new_sockets[8] = {};
-	setup_sockets(sockets, new_sockets, n_clients);
+	struct Client clients[8];
+	setup_sockets(clients, n_clients);
 
 	//NOTE(stanisz): Each client (out of 8 maximum) has their 
 	// 256 chars of data.
 	while(1)
 	{
 		char client_messages[8][256] = {};
-		listen_to_clients(new_sockets, n_clients, client_messages);
+		listen_to_clients(clients, n_clients);
 
 		for (u32 i = 0; i < n_clients; ++i)
 		{
@@ -179,10 +173,10 @@ int main(int argc, char** argv)
 			}
 		}
 
-		send_to_clients(new_sockets, n_clients);
+		send_to_clients(clients, n_clients);
 	}
 	
-	cleanup_sockets(sockets);
+	cleanup_sockets(clients, n_clients);
 
 	return 0;
 }
