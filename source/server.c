@@ -22,7 +22,7 @@ struct ListenerWork
 	u32 port;
 	i32 sock;
 	//NOTE(stanisz): This message will be recieved by the server.
-	u8 client_message[256];
+	u32 client_message[256];
 };
 
 struct SenderWork
@@ -30,12 +30,12 @@ struct SenderWork
 	u32 port;
 	i32 sock;
 	//NOTE(stanisz): This message will be recieved by the client.
-	u8 server_message[256];
+	u32 server_message[256];
 };
 
 void listener(struct ListenerWork* work)
 {
-	memset(work->client_message, 0, 256);
+	memset(work->client_message, 0, 256 * sizeof(u32));
 
 	assert(
 			recv(work->sock, work->client_message,
@@ -64,7 +64,10 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
-		printf("From port [%d]: %s\n", 9002 + i, works[i].client_message);
+		printf("From port [%d]: \tSTATUS = %d \tKEYS = %d\n", 9002 + i,
+				works[i].client_message[DISCONNECTED], 
+				works[i].client_message[KEYS_PRESSED_MASK]);
+
 		memcpy(clients[i].message, works[i].client_message,
 				sizeof(works[i].client_message));
 	}
@@ -89,7 +92,7 @@ void send_to_clients(struct Client *clients, const u32 n_clients)
 		works[i].port = 9002 + i;
 		works[i].sock = clients[i].sock;
 
-		u8 msg[50] = "SERVER TALKS!\0";
+		u32 msg[50] = {133337, 128635};
 		memcpy(&works[i].server_message, msg, sizeof(msg));
 
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
@@ -152,17 +155,8 @@ void parse_clients(struct Client *clients, u32 n_clients)
 {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
-		clients[i].disconnected = 0;
-		clients[i].key_up_pressed = 0;
-
-		if (clients[i].message[DISCONNECTED] == '1')
-		{
-			clients[i].disconnected = 1;
-		}
-		if (clients[i].message[KEYUP] == '1')
-		{
-			clients[i].key_up_pressed = 1;
-		}
+		clients[i].disconnected = clients[i].message[DISCONNECTED];
+		clients[i].keys_pressed_mask = clients[i].message[KEYS_PRESSED_MASK];
 	}
 }
 
@@ -186,13 +180,13 @@ int main(int argc, char** argv)
 
 		for (u32 i = 0; i < n_clients; ++i)
 		{
-			if (clients[i].disconnected == 1)
+			if (clients[i].disconnected != 0)
 			{
 				LOG("Client disconnected.");
 			}
-			if (clients[i].key_up_pressed == 1)
+			if (clients[i].keys_pressed_mask != 0)
 			{
-				LOG("Key UP pressed.");
+				LOG("Key pressed.");
 			}
 		}
 

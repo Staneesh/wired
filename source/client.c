@@ -56,7 +56,19 @@ u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 	{
 		if (event->key.keysym.sym == SDLK_UP)
 		{
-			client->key_up_pressed = 1;
+			recognize_client_key_press(client, KEYUP);
+		}
+		if (event->key.keysym.sym == SDLK_DOWN)
+		{
+			recognize_client_key_press(client, KEYDOWN);
+		}
+		if (event->key.keysym.sym == SDLK_LEFT)
+		{
+			recognize_client_key_press(client, KEYLEFT);
+		}
+		if (event->key.keysym.sym == SDLK_RIGHT)
+		{
+			recognize_client_key_press(client, KEYRIGHT);
 		}
 	}
 
@@ -64,7 +76,19 @@ u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 	{
 		if (event->key.keysym.sym == SDLK_UP)
 		{
-			client->key_up_pressed = 0;
+			recognize_client_key_release(client, KEYUP);
+		}
+		if (event->key.keysym.sym == SDLK_DOWN)
+		{
+			recognize_client_key_release(client, KEYDOWN);
+		}
+		if (event->key.keysym.sym == SDLK_LEFT)
+		{
+			recognize_client_key_release(client, KEYLEFT);
+		}
+		if (event->key.keysym.sym == SDLK_RIGHT)
+		{
+			recognize_client_key_release(client, KEYRIGHT);
 		}
 	}
 
@@ -91,7 +115,7 @@ int main(int argc, char** argv)
 	bzero(client.message, sizeof(client.message));
 	setup_socket(&client);
 
-	char server_message[256] = {};	
+	u32 server_message[256] = {};	
 
 	u8 is_running = 1;
 
@@ -108,8 +132,11 @@ int main(int argc, char** argv)
 		send(client.sock, &client.message, sizeof(client.message), 0);
 		recv(client.sock, &server_message, sizeof(server_message), 0);
 
-		server_message[sizeof(server_message)-1] = '\0';
-		printf("Client on port [%d]: Server says: %s\n", client.port, server_message);
+		printf("Server says: \n");
+		for (u32 i = 0; i < 2; ++i)
+		{
+			printf("\t%u: %u\n\n", i, server_message[i]);
+		}
 
 
 	}
