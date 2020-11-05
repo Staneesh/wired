@@ -42,6 +42,35 @@ void init_sdl(SDL_Window *window)
 	UNUSED(window);
 }
 
+u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
+{
+	u8 result = 1;
+	if (event->type == SDL_QUIT)
+	{
+		client->disconnected = 1;
+		result = 0;
+		return result;
+	}
+
+	if (event->type == SDL_KEYDOWN)
+	{
+		if (event->key.keysym.sym == SDLK_UP)
+		{
+			client->key_up_pressed = 1;
+		}
+	}
+
+	if (event->type == SDL_KEYUP)
+	{
+		if (event->key.keysym.sym == SDLK_UP)
+		{
+			client->key_up_pressed = 0;
+		}
+	}
+
+	return result;
+}
+
 int main(int argc, char** argv)
 {
 	SDL_Window *window = 0;
@@ -71,28 +100,7 @@ int main(int argc, char** argv)
 		SDL_Event event;
 		while (SDL_PollEvent(&event) != 0)
 		{
-			if (event.type == SDL_QUIT)
-			{
-				is_running = 0;
-				client.disconnected = 1;
-				break;
-			}
-
-			if (event.type == SDL_KEYDOWN)
-			{
-				if (event.key.keysym.sym == SDLK_UP)
-				{
-					client.key_up_pressed = 1;
-				}
-			}
-
-			if (event.type == SDL_KEYUP)
-			{
-				if (event.key.keysym.sym == SDLK_UP)
-				{
-					client.key_up_pressed = 0;
-				}
-			}
+			is_running = handle_keyboard_for_client(&client, &event);
 		}
 
 		update_client_message(&client);
