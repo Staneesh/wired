@@ -178,8 +178,6 @@ int main(int argc, char** argv)
 	struct Client clients[8];
 	setup_sockets(clients, n_clients);
 
-	//NOTE(stanisz): Each client (out of 8 maximum) has their 
-	// 256 chars of data.
 	while(1)
 	{
 		listen_to_clients(clients, n_clients);
