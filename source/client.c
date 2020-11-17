@@ -42,6 +42,7 @@ void init_sdl(SDL_Window *window)
 	UNUSED(window);
 }
 
+//TODO(stanisz): cleanup this code, its one million LOC 
 u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 {
 	u8 result = 1;

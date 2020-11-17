@@ -21,8 +21,7 @@ struct ListenerWork
 {
 	u32 port;
 	i32 sock;
-	//NOTE(stanisz): This message will be recieved by the server.
-	Client client_message;
+	Client client_data;
 };
 
 struct SenderWork
@@ -36,8 +35,8 @@ struct SenderWork
 void listener(struct ListenerWork* work)
 {
 	assert(
-			recv(work->sock, &work->client_message,
-				sizeof(work->client_message), 0) != -1
+			recv(work->sock, &work->client_data,
+				sizeof(work->client_data), 0) != -1
 			);
 }
 
@@ -63,8 +62,8 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		printf("From port [%d]: \tSTATUS = %d \tKEYS = %d\n", 9002 + i,
-				works[i].client_message.disconnected, 
-				works[i].client_message.keys_pressed_mask);
+				works[i].client_data.disconnected, 
+				works[i].client_data.keys_pressed_mask);
 
 	}
 }
