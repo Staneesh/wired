@@ -112,7 +112,6 @@ int main(int argc, char** argv)
 	{
 		client.port = atoi(argv[1]);
 	}
-	bzero(client.message, sizeof(client.message));
 	setup_socket(&client);
 
 	u32 server_message[256] = {};	
@@ -127,9 +126,7 @@ int main(int argc, char** argv)
 			is_running = handle_keyboard_for_client(&client, &event);
 		}
 
-		update_client_message(&client);
-
-		send(client.sock, &client.message, sizeof(client.message), 0);
+		send(client.sock, &client, sizeof(client), 0);
 		recv(client.sock, &server_message, sizeof(server_message), 0);
 
 		printf("Server says: \n");

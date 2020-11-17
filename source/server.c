@@ -22,7 +22,7 @@ struct ListenerWork
 	u32 port;
 	i32 sock;
 	//NOTE(stanisz): This message will be recieved by the server.
-	u32 client_message[256];
+	Client client_message;
 };
 
 struct SenderWork
@@ -35,10 +35,8 @@ struct SenderWork
 
 void listener(struct ListenerWork* work)
 {
-	memset(work->client_message, 0, 256 * sizeof(u32));
-
 	assert(
-			recv(work->sock, work->client_message,
+			recv(work->sock, &work->client_message,
 				sizeof(work->client_message), 0) != -1
 			);
 }
@@ -65,11 +63,9 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		printf("From port [%d]: \tSTATUS = %d \tKEYS = %d\n", 9002 + i,
-				works[i].client_message[DISCONNECTED], 
-				works[i].client_message[KEYS_PRESSED_MASK]);
+				works[i].client_message.disconnected, 
+				works[i].client_message.keys_pressed_mask);
 
-		memcpy(clients[i].message, works[i].client_message,
-				sizeof(works[i].client_message));
 	}
 }
 
@@ -151,15 +147,6 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 	}
 }
 
-void parse_clients(struct Client *clients, u32 n_clients)
-{
-	for (u32 i = 0; i < n_clients; ++i)
-	{
-		clients[i].disconnected = clients[i].message[DISCONNECTED];
-		clients[i].keys_pressed_mask = clients[i].message[KEYS_PRESSED_MASK];
-	}
-}
-
 int main(int argc, char** argv)
 {
 	u32 n_clients = 1;
@@ -175,8 +162,6 @@ int main(int argc, char** argv)
 	while(1)
 	{
 		listen_to_clients(clients, n_clients);
-
-		parse_clients(clients, n_clients);
 
 		for (u32 i = 0; i < n_clients; ++i)
 		{
