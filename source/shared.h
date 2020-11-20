@@ -9,12 +9,6 @@ enum KeyIndex
 	KEYRIGHT,
 };
 
-enum MessageType
-{
-	DISCONNECTED,
-	KEYS_PRESSED_MASK,
-};
-
 typedef struct Client
 {
 	i32 port;
