@@ -115,7 +115,7 @@ int main(int argc, char** argv)
 	}
 	setup_socket(&client);
 
-	u32 server_message[256] = {};	
+	World world_subset = {};
 
 	u8 is_running = 1;
 
@@ -128,13 +128,10 @@ int main(int argc, char** argv)
 		}
 
 		send(client.sock, &client, sizeof(client), 0);
-		recv(client.sock, &server_message, sizeof(server_message), 0);
+		recv(client.sock, &world_subset, sizeof(world_subset), 0);
 
 		printf("Server says: \n");
-		for (u32 i = 0; i < 2; ++i)
-		{
-			printf("\t%u: %u\n\n", i, server_message[i]);
-		}
+		printf("%u\n", world_subset.a);
 
 
 	}

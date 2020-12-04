@@ -28,8 +28,7 @@ struct SenderWork
 {
 	u32 port;
 	i32 sock;
-	//NOTE(stanisz): This message will be recieved by the client.
-	u32 server_message[256];
+	World world_subset;
 };
 
 void listener(struct ListenerWork* work)
@@ -71,8 +70,8 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 void sender(struct SenderWork* work)
 {
 	assert(
-			send(work->sock, work->server_message, 
-				sizeof(work->server_message), 0) != -1
+			send(work->sock, &work->world_subset, 
+				sizeof(work->world_subset), 0) != -1
 			);
 }
 
@@ -86,9 +85,7 @@ void send_to_clients(struct Client *clients, const u32 n_clients)
 	{
 		works[i].port = 9002 + i;
 		works[i].sock = clients[i].sock;
-
-		u32 msg[50] = {133337, 128635};
-		memcpy(&works[i].server_message, msg, sizeof(msg));
+		works[i].world_subset.a = 1337;
 
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
 	}
