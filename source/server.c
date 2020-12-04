@@ -60,10 +60,8 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
-		printf("From port [%d]: \tSTATUS = %d \tKEYS = %d\n", 9002 + i,
-				works[i].client_data.disconnected, 
-				works[i].client_data.keys_pressed_mask);
-
+		clients[i].disconnected = works[i].client_data.disconnected;
+		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
 	}
 }
 
@@ -167,7 +165,7 @@ int main(int argc, char** argv)
 			}
 			if (clients[i].keys_pressed_mask != 0)
 			{
-				LOG("Key pressed.");
+				LOG_UINT(clients[i].keys_pressed_mask);
 			}
 		}
 
