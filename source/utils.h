@@ -38,6 +38,7 @@ typedef double real64;
 #define LOG_HERE printf("Line %d in file %s says: HERE! \n", \
 		__LINE__, __FILE__);
 
+#define LOG_NL printf("\n");
 #define UNUSED(x) (void)(x)
 
 

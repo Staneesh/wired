@@ -96,6 +96,23 @@ u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 	return result;
 }
 
+void handle_mouse_for_client(struct Client *client, SDL_Event *event)
+{
+	if (event->type == SDL_MOUSEBUTTONDOWN)
+	{
+		recognize_client_key_press(client, MOUSEPRESSED);
+	}
+	if (event->type == SDL_MOUSEBUTTONUP)
+	{
+		recognize_client_key_release(client, MOUSEPRESSED);
+	}
+	if (event->type == SDL_MOUSEMOTION)
+	{
+		client->mouse_x = event->motion.x;
+		client->mouse_y = event->motion.y;
+	}
+}
+
 int main(int argc, char** argv)
 {
 	SDL_Window *window = 0;
@@ -125,6 +142,7 @@ int main(int argc, char** argv)
 		while (SDL_PollEvent(&event) != 0)
 		{
 			is_running = handle_keyboard_for_client(&client, &event);
+			handle_mouse_for_client(&client, &event);
 		}
 
 		send(client.sock, &client, sizeof(client), 0);
@@ -132,8 +150,6 @@ int main(int argc, char** argv)
 
 		printf("Server says: \n");
 		printf("%u\n", world_subset.a);
-
-
 	}
 
 	close(client.sock);

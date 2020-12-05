@@ -7,6 +7,7 @@ enum KeyIndex
 	KEYDOWN,
 	KEYLEFT,
 	KEYRIGHT,
+	MOUSEPRESSED,
 };
 
 typedef struct Client
@@ -17,6 +18,8 @@ typedef struct Client
 	//NOTE(stanisz): Uses KeyPressMsg for setting and getting
 	// the data about each specific key.
 	u32 keys_pressed_mask;
+	i32 mouse_x;
+	i32 mouse_y;
 } Client;
 
 void recognize_client_key_press(struct Client* client, enum KeyIndex m);

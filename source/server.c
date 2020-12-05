@@ -62,6 +62,8 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	{
 		clients[i].disconnected = works[i].client_data.disconnected;
 		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
+		clients[i].mouse_x = works[i].client_data.mouse_x;
+		clients[i].mouse_y = works[i].client_data.mouse_y;
 	}
 }
 
@@ -167,6 +169,9 @@ int main(int argc, char** argv)
 			{
 				LOG_UINT(clients[i].keys_pressed_mask);
 			}
+			LOG_INT(clients[i].mouse_x);
+			LOG_INT(clients[i].mouse_y);
+			LOG_NL;
 		}
 
 		send_to_clients(clients, n_clients);
