@@ -143,6 +143,21 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 	}
 }
 
+void print_clients(struct Client clients[8], u32 n_clients)
+{
+	for (u32 i = 0; i < n_clients; ++i)
+	{
+		if (clients[i].disconnected != 0)
+		{
+			LOG("Client disconnected.");
+		}
+		if (clients[i].keys_pressed_mask != 0)
+		{
+			LOG_UINT(clients[i].keys_pressed_mask);
+		}
+	}
+}
+
 int main(int argc, char** argv)
 {
 	u32 n_clients = 1;
@@ -158,22 +173,7 @@ int main(int argc, char** argv)
 	while(1)
 	{
 		listen_to_clients(clients, n_clients);
-
-		for (u32 i = 0; i < n_clients; ++i)
-		{
-			if (clients[i].disconnected != 0)
-			{
-				LOG("Client disconnected.");
-			}
-			if (clients[i].keys_pressed_mask != 0)
-			{
-				LOG_UINT(clients[i].keys_pressed_mask);
-			}
-			LOG_INT(clients[i].mouse_x);
-			LOG_INT(clients[i].mouse_y);
-			LOG_NL;
-		}
-
+		//print_clients(clients, n_clients);
 		send_to_clients(clients, n_clients);
 	}
 	
