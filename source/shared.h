@@ -25,10 +25,17 @@ typedef struct Client
 void recognize_client_key_press(struct Client* client, enum KeyIndex m);
 void recognize_client_key_release(struct Client* client, enum KeyIndex m);
 
+typedef struct Tile
+{
+	//TODO(stanisz): TODO!
+} Tile;
 typedef struct World
 {
-	//TODO(stanisz): test value
 	u32 a;
+
+	struct Tile *tiles;
+	u32 n_tiles;
+
 } World;
 
 #endif
