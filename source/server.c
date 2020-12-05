@@ -75,7 +75,8 @@ void sender(struct SenderWork* work)
 			);
 }
 
-void send_to_clients(struct Client *clients, const u32 n_clients)
+void send_to_clients(struct Client *clients, struct World worlds[8], 
+		const u32 n_clients)
 {
 	struct SenderWork works[n_clients];
 
@@ -85,7 +86,7 @@ void send_to_clients(struct Client *clients, const u32 n_clients)
 	{
 		works[i].port = 9002 + i;
 		works[i].sock = clients[i].sock;
-		works[i].world_subset.a = 1337;
+		works[i].world_subset.a = worlds[i].a;
 
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
 	}
@@ -158,6 +159,15 @@ void print_clients(struct Client clients[8], u32 n_clients)
 	}
 }
 
+//NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
+void compute_world_subset(struct World worlds[8], u32 n_worlds)
+{
+	for (u32 i = 0; i < n_worlds; ++i)
+	{
+		worlds[i].a = i + 112;
+	}
+}
+
 int main(int argc, char** argv)
 {
 	u32 n_clients = 1;
@@ -170,11 +180,14 @@ int main(int argc, char** argv)
 	struct Client clients[8];
 	setup_sockets(clients, n_clients);
 
+	struct World worlds[8] = {};
+
 	while(1)
 	{
 		listen_to_clients(clients, n_clients);
 		//print_clients(clients, n_clients);
-		send_to_clients(clients, n_clients);
+		compute_world_subset(worlds, n_clients);
+		send_to_clients(clients, worlds, n_clients);
 	}
 	
 	cleanup_sockets(clients, n_clients);
