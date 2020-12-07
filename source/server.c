@@ -61,10 +61,14 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		//TODO(stanisz): copying a struct doesnt work apparently
+		//clients[i] = works[i].client_data;
+
+		
 		clients[i].disconnected = works[i].client_data.disconnected;
 		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
 		clients[i].mouse_x = works[i].client_data.mouse_x;
 		clients[i].mouse_y = works[i].client_data.mouse_y;
+		
 	}
 }
 
