@@ -10,6 +10,7 @@ enum KeyIndex
 	MOUSEPRESSED,
 };
 
+//TODO(stanisz): this should be serialized to handle endianness
 typedef struct Client
 {
 	i32 port;
@@ -28,7 +29,12 @@ void recognize_client_key_release(struct Client* client, enum KeyIndex m);
 typedef struct Tile
 {
 	//TODO(stanisz): TODO!
+	u32 x, y;
+	u32 color;
+	
 } Tile;
+
+//TODO(stanisz): this should be serialized to handle endianness
 typedef struct World
 {
 	u32 a;

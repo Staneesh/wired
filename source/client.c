@@ -132,6 +132,9 @@ int main(int argc, char** argv)
 	}
 	setup_socket(&client);
 
+	//NOTE(stanisz): This contains only the data visible to the client.
+	// Some elements are not discovered by the client probably, and should
+	// remain hidden. The server computes what elements are visible.
 	World world_subset = {};
 
 	u8 is_running = 1;
