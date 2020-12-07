@@ -119,6 +119,7 @@ int main(int argc, char** argv)
 	init_sdl(window);
 
 	UNUSED(argc);
+	//TODO(stanisz): copying a struct doesnt work apparently
 	UNUSED(argv);
 
 	struct Client client = {};
@@ -153,6 +154,12 @@ int main(int argc, char** argv)
 
 		printf("Server says: \n");
 		printf("%u\n", world_subset.a);
+		LOG_UINT(world_subset.n_tiles);	
+		for (u32 i = 0; i < world_subset.n_tiles; ++i)
+		{
+			printf("\t%d %d \n", world_subset.tiles[i].x, world_subset.tiles[i].y);
+		}
+		LOG_HERE;
 	}
 
 	close(client.sock);

@@ -60,6 +60,7 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
+		//TODO(stanisz): copying a struct doesnt work apparently
 		clients[i].disconnected = works[i].client_data.disconnected;
 		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
 		clients[i].mouse_x = works[i].client_data.mouse_x;
@@ -86,7 +87,7 @@ void send_to_clients(struct Client *clients, struct World worlds[8],
 	{
 		works[i].port = 9002 + i;
 		works[i].sock = clients[i].sock;
-		works[i].world_subset.a = worlds[i].a;
+		works[i].world_subset = worlds[i];
 
 		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
 	}
@@ -165,6 +166,14 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds)
 	for (u32 i = 0; i < n_worlds; ++i)
 	{
 		worlds[i].a = i + 112;
+		worlds[i].n_tiles = 16;
+		worlds[i].tile_size = 1280 / 4;   
+		for (u32 j = 0; j < worlds[i].n_tiles; ++j)
+		{
+			worlds[i].tiles[j].x = j % 4;
+			worlds[i].tiles[j].y = j / 4;
+			worlds[i].tiles[j].color = 0xff00ffff;
+		}
 	}
 }
 

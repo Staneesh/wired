@@ -29,7 +29,7 @@ void recognize_client_key_release(struct Client* client, enum KeyIndex m);
 typedef struct Tile
 {
 	//TODO(stanisz): TODO!
-	u32 x, y;
+	u32 x, y; //NOTE(stanisz): Center of the tile
 	u32 color;
 	
 } Tile;
@@ -37,10 +37,10 @@ typedef struct Tile
 //TODO(stanisz): this should be serialized to handle endianness
 typedef struct World
 {
-	u32 a;
-
-	struct Tile *tiles;
+	struct Tile tiles[16]; //NOTE(stanisz): 4x4 grid?
 	u32 n_tiles;
+	u32 tile_size;
+	u32 a; //NOTE(stanisz): test value
 
 } World;
 
