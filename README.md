@@ -15,8 +15,11 @@ pacman: `pacman -S sdl2`
 ## Building
 
 `git clone git@github.com:Staneesh/wired.git`
+
 `cd wired`
+
 `chmod +x compile.sh`
+
 `./compile.sh release`
 
 To start a server use:
