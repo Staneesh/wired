@@ -1,8 +1,8 @@
 # wired
 
-Deep, deep in development...
+Deep, deep in development... 🐣 
 
-## Dependencies 
+## Dependencies ↘️ 
 
 This game uses:
 
@@ -12,7 +12,7 @@ apt: `sudo apt install libsdl2-dev`
 
 pacman: `pacman -S sdl2`
 
-## Building
+## Building 🛠️ 
 
 `git clone git@github.com:Staneesh/wired.git`
 
