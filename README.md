@@ -10,9 +10,16 @@ This game uses:
 
 apt: `sudo apt install libsdl2-dev`  
 
-pacman: `pacman -S sdl2`
+pacman: `sudo pacman -S sdl2`
 
 ## Building 🛠️ 
+
+**ctags** is used for generating tags that vim uses.
+
+apt: `sudo apt install ctags`
+
+pacman: `sudo pacman -S ctags`
+
 
 `git clone git@github.com:Staneesh/wired.git`
 

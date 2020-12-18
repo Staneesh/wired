@@ -166,6 +166,7 @@ void print_clients(struct Client clients[8], u32 n_clients)
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
 void compute_world_subset(struct World worlds[8], u32 n_worlds)
+
 {
 	for (u32 i = 0; i < n_worlds; ++i)
 	{

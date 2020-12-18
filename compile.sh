@@ -36,3 +36,6 @@ time gcc source/client.c -o build/"$mode"/client $flags $common
 # TODO(stanisz): i dont know why these are created, so this
 # deletion is a temporary hotfix
 rm debug release > /dev/null 2>$1
+
+# NOTE(stanisz): generate tags for vim (requires ctags installed)
+ctags -R
