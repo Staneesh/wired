@@ -36,6 +36,7 @@ client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	fil
 color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile
 compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds)$/;"	f
 disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client
+draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, SDL_Texture *screen_texture,$/;"	f
 handle_keyboard_for_client	source/client.c	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f
 handle_mouse_for_client	source/client.c	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f
 i16	source/utils.h	/^typedef int16_t i16; $/;"	t

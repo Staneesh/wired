@@ -34,11 +34,6 @@ void setup_socket(struct Client* client)
 
 void init_sdl(SDL_Window *window)
 {
-	SDL_Init(SDL_INIT_VIDEO);
-
-	window = SDL_CreateWindow("Wired", 
-			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-			1280, 720, 0);
 	UNUSED(window);
 }
 
@@ -113,10 +108,39 @@ void handle_mouse_for_client(struct Client *client, SDL_Event *event)
 	}
 }
 
+void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, SDL_Texture *screen_texture,
+		SDL_Renderer *renderer)
+{
+	u32 *pixels = (u32*)malloc(sizeof(u32) * 1280 * 720);
+	i32 pitch = 720 * sizeof(u32);
+	//SDL_LockTexture(screen_texture, NULL, (void**)&pixels, &pitch);	
+	//write to pixels
+	u32 *pixel = pixels;
+	for (u32 y = 0; y < 720; ++y)
+	{
+		for (u32 x = 0; x < 1280; ++x)
+		{
+			*pixel++ = 0xffbabeff;
+		}
+	}
+	memset(pixels, 255, 720 * 1280 * sizeof(u32));
+
+	SDL_UpdateTexture(screen_texture, NULL, pixels, 1280 * sizeof(u32));
+
+	//SDL_UnlockTexture(screen_texture);
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
+	SDL_RenderPresent(renderer);
+
+	free(pixels);
+}
+
 int main(int argc, char** argv)
 {
-	SDL_Window *window = 0;
-	init_sdl(window);
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Window *window = SDL_CreateWindow("Wired", 
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+			1280, 720, 0);
 
 	UNUSED(argc);
 	//TODO(stanisz): copying a struct doesnt work apparently
@@ -140,6 +164,16 @@ int main(int argc, char** argv)
 
 	u8 is_running = 1;
 
+	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
+	if (!renderer)
+		printf("%s\n", SDL_GetError());
+
+	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
+	if (!screen_texture)
+		printf("%s\n", SDL_GetError());
+		
+
+
 	while (is_running)
 	{
 		SDL_Event event;
@@ -148,6 +182,8 @@ int main(int argc, char** argv)
 			is_running = handle_keyboard_for_client(&client, &event);
 			handle_mouse_for_client(&client, &event);
 		}
+
+		draw_visible_world_subset(&world_subset, window, screen_texture, renderer);
 
 		send(client.sock, &client, sizeof(client), 0);
 		recv(client.sock, &world_subset, sizeof(world_subset), 0);
