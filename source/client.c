@@ -108,18 +108,18 @@ void handle_mouse_for_client(struct Client *client, SDL_Event *event)
 	}
 }
 
-void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, SDL_Texture *screen_texture,
-		SDL_Renderer *renderer)
+void draw_pixel(u32* pixels, u32 x_pos, u32 y_pos, u32 color)
+{}
+
+void draw_visible_world_subset(SDL_Texture *screen_texture, u32 *pixels, SDL_Renderer *renderer)
 {
-	u32 *pixels = (u32*)malloc(sizeof(u32) * 1280 * 720);
-	i32 pitch = 720 * sizeof(u32);
 	//write to pixels
 	u32 *pixel = pixels;
 	for (u32 y = 0; y < 720; ++y)
 	{
 		for (u32 x = 0; x < 1280; ++x)
 		{
-			*pixel++ = 0xffbabeff;
+			*pixel++ = 0xff0000ff;
 		}
 	}
 	//memset(pixels, 255, 720 * 1280 * sizeof(u32));
@@ -131,8 +131,6 @@ void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, S
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
-
-	free(pixels);
 }
 
 int main(int argc, char** argv)
@@ -168,11 +166,12 @@ int main(int argc, char** argv)
 	if (!renderer)
 		printf("%s\n", SDL_GetError());
 
-	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
+	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
 	if (!screen_texture)
 		printf("%s\n", SDL_GetError());
 		
 
+	u32 *pixels = (u32*)malloc(sizeof(u32) * 1280 * 720);
 
 	while (is_running)
 	{
@@ -183,7 +182,7 @@ int main(int argc, char** argv)
 			handle_mouse_for_client(&client, &event);
 		}
 
-		draw_visible_world_subset(&world_subset, window, screen_texture, renderer);
+		draw_visible_world_subset(screen_texture, pixels, renderer);
 
 		send(client.sock, &client, sizeof(client), 0);
 		recv(client.sock, &world_subset, sizeof(world_subset), 0);
@@ -192,6 +191,8 @@ int main(int argc, char** argv)
 	close(client.sock);
 
 	SDL_Quit();
+
+	free(pixels);
 
 	return 0;
 }
