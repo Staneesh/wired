@@ -1,78 +1,83 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
-!_TAG_PROGRAM_NAME	Exuberant Ctags	//
-!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
+Building 🛠️	README.md	/^## Building 🛠️ $/;"	s
 Client	source/shared.h	/^typedef struct Client$/;"	s
 Client	source/shared.h	/^} Client;$/;"	t	typeref:struct:Client
+Dependencies ↘️	README.md	/^## Dependencies ↘️ $/;"	s
 KEYDOWN	source/shared.h	/^	KEYDOWN,$/;"	e	enum:KeyIndex
 KEYLEFT	source/shared.h	/^	KEYLEFT,$/;"	e	enum:KeyIndex
 KEYRIGHT	source/shared.h	/^	KEYRIGHT,$/;"	e	enum:KeyIndex
 KEYUP	source/shared.h	/^	KEYUP,$/;"	e	enum:KeyIndex
 KeyIndex	source/shared.h	/^enum KeyIndex$/;"	g
-LOG	source/utils.h	32;"	d
-LOG_FLOAT	source/utils.h	35;"	d
-LOG_HERE	source/utils.h	38;"	d
-LOG_HEX	source/utils.h	23;"	d
-LOG_INT	source/utils.h	17;"	d
-LOG_NL	source/utils.h	41;"	d
-LOG_POINTER	source/utils.h	26;"	d
-LOG_STRING	source/utils.h	29;"	d
-LOG_UINT	source/utils.h	20;"	d
+LOG	source/utils.h	/^#define LOG(/;"	d
+LOG_FLOAT	source/utils.h	/^#define LOG_FLOAT(/;"	d
+LOG_HERE	source/utils.h	/^#define LOG_HERE /;"	d
+LOG_HEX	source/utils.h	/^#define LOG_HEX(/;"	d
+LOG_INT	source/utils.h	/^#define LOG_INT(/;"	d
+LOG_NL	source/utils.h	/^#define LOG_NL /;"	d
+LOG_POINTER	source/utils.h	/^#define LOG_POINTER(/;"	d
+LOG_STRING	source/utils.h	/^#define LOG_STRING(/;"	d
+LOG_UINT	source/utils.h	/^#define LOG_UINT(/;"	d
 ListenerWork	source/server.c	/^struct ListenerWork$/;"	s	file:
 MOUSEPRESSED	source/shared.h	/^	MOUSEPRESSED,$/;"	e	enum:KeyIndex
-SHARED_H	source/shared.h	2;"	d
+SHARED_H	source/shared.h	/^#define SHARED_H$/;"	d
 SenderWork	source/server.c	/^struct SenderWork$/;"	s	file:
 Tile	source/shared.h	/^typedef struct Tile$/;"	s
 Tile	source/shared.h	/^} Tile;$/;"	t	typeref:struct:Tile
-UNUSED	source/utils.h	42;"	d
-UTILS_H	source/utils.h	2;"	d
+UNUSED	source/utils.h	/^#define UNUSED(/;"	d
+UTILS_H	source/utils.h	/^#define UTILS_H$/;"	d
 World	source/shared.h	/^typedef struct World$/;"	s
 World	source/shared.h	/^} World;$/;"	t	typeref:struct:World
-a	source/shared.h	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World
-cleanup_sockets	source/server.c	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f
-client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	file:
-color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile
-compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds)$/;"	f
-disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client
-draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, SDL_Texture *screen_texture,$/;"	f
-handle_keyboard_for_client	source/client.c	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f
-handle_mouse_for_client	source/client.c	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f
-i16	source/utils.h	/^typedef int16_t i16; $/;"	t
-i32	source/utils.h	/^typedef int32_t i32; $/;"	t
-i64	source/utils.h	/^typedef int64_t i64; $/;"	t
-i8	source/utils.h	/^typedef int8_t i8; $/;"	t
-init_sdl	source/client.c	/^void init_sdl(SDL_Window *window)$/;"	f
-keys_pressed_mask	source/shared.h	/^	u32 keys_pressed_mask;$/;"	m	struct:Client
-listen_to_clients	source/server.c	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f
-listener	source/server.c	/^void listener(struct ListenerWork* work)$/;"	f
-main	source/client.c	/^int main(int argc, char** argv)$/;"	f
-main	source/server.c	/^int main(int argc, char** argv)$/;"	f
-mouse_x	source/shared.h	/^	i32 mouse_x;$/;"	m	struct:Client
-mouse_y	source/shared.h	/^	i32 mouse_y;$/;"	m	struct:Client
-n_tiles	source/shared.h	/^	u32 n_tiles;$/;"	m	struct:World
-port	source/server.c	/^	u32 port;$/;"	m	struct:ListenerWork	file:
-port	source/server.c	/^	u32 port;$/;"	m	struct:SenderWork	file:
-port	source/shared.h	/^	i32 port;$/;"	m	struct:Client
-print_clients	source/server.c	/^void print_clients(struct Client clients[8], u32 n_clients)$/;"	f
-real32	source/utils.h	/^typedef float real32;$/;"	t
-real64	source/utils.h	/^typedef double real64;$/;"	t
-recognize_client_key_press	source/shared.c	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f
-recognize_client_key_release	source/shared.c	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f
-send_to_clients	source/server.c	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f
-sender	source/server.c	/^void sender(struct SenderWork* work)$/;"	f
-setup_socket	source/client.c	/^void setup_socket(struct Client* client)$/;"	f
-setup_sockets	source/server.c	/^void setup_sockets(struct Client *clients, u32 n_clients)$/;"	f
-sock	source/server.c	/^	i32 sock;$/;"	m	struct:ListenerWork	file:
-sock	source/server.c	/^	i32 sock;$/;"	m	struct:SenderWork	file:
-sock	source/shared.h	/^	i32 sock;$/;"	m	struct:Client
-tile_size	source/shared.h	/^	u32 tile_size;$/;"	m	struct:World
-tiles	source/shared.h	/^	struct Tile tiles[16]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:struct:World::Tile
-u16	source/utils.h	/^typedef uint16_t u16; $/;"	t
-u32	source/utils.h	/^typedef uint32_t u32; $/;"	t
-u64	source/utils.h	/^typedef uint64_t u64; $/;"	t
-u8	source/utils.h	/^typedef uint8_t u8; $/;"	t
-world_subset	source/server.c	/^	World world_subset;$/;"	m	struct:SenderWork	file:
-x	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile
-y	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile
+a	source/shared.h	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typeref:typename:u32
+cleanup_sockets	source/server.c	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
+client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
+color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
+compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds)$/;"	f	typeref:typename:void
+disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
+draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, SDL_Texture *scre/;"	f	typeref:typename:void
+handle_keyboard_for_client	source/client.c	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
+handle_mouse_for_client	source/client.c	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
+i16	source/utils.h	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
+i32	source/utils.h	/^typedef int32_t i32; $/;"	t	typeref:typename:int32_t
+i64	source/utils.h	/^typedef int64_t i64; $/;"	t	typeref:typename:int64_t
+i8	source/utils.h	/^typedef int8_t i8; $/;"	t	typeref:typename:int8_t
+init_sdl	source/client.c	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
+keys_pressed_mask	source/shared.h	/^	u32 keys_pressed_mask;$/;"	m	struct:Client	typeref:typename:u32
+listen_to_clients	source/server.c	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f	typeref:typename:void
+listener	source/server.c	/^void listener(struct ListenerWork* work)$/;"	f	typeref:typename:void
+main	source/client.c	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
+main	source/server.c	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
+mouse_x	source/shared.h	/^	i32 mouse_x;$/;"	m	struct:Client	typeref:typename:i32
+mouse_y	source/shared.h	/^	i32 mouse_y;$/;"	m	struct:Client	typeref:typename:i32
+n_tiles	source/shared.h	/^	u32 n_tiles;$/;"	m	struct:World	typeref:typename:u32
+port	source/server.c	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
+port	source/server.c	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
+port	source/shared.h	/^	i32 port;$/;"	m	struct:Client	typeref:typename:i32
+print_clients	source/server.c	/^void print_clients(struct Client clients[8], u32 n_clients)$/;"	f	typeref:typename:void
+real32	source/utils.h	/^typedef float real32;$/;"	t	typeref:typename:float
+real64	source/utils.h	/^typedef double real64;$/;"	t	typeref:typename:double
+recognize_client_key_press	source/shared.c	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
+recognize_client_key_release	source/shared.c	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
+send_to_clients	source/server.c	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f	typeref:typename:void
+sender	source/server.c	/^void sender(struct SenderWork* work)$/;"	f	typeref:typename:void
+setup_socket	source/client.c	/^void setup_socket(struct Client* client)$/;"	f	typeref:typename:void
+setup_sockets	source/server.c	/^void setup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
+sock	source/server.c	/^	i32 sock;$/;"	m	struct:ListenerWork	typeref:typename:i32	file:
+sock	source/server.c	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32	file:
+sock	source/shared.h	/^	i32 sock;$/;"	m	struct:Client	typeref:typename:i32
+tile_size	source/shared.h	/^	u32 tile_size;$/;"	m	struct:World	typeref:typename:u32
+tiles	source/shared.h	/^	struct Tile tiles[16]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:struct:Tile[16]
+u16	source/utils.h	/^typedef uint16_t u16; $/;"	t	typeref:typename:uint16_t
+u32	source/utils.h	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
+u64	source/utils.h	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
+u8	source/utils.h	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
+wired	README.md	/^# wired$/;"	c
+world_subset	source/server.c	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
+x	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile	typeref:typename:u32
+y	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile	typeref:typename:u32

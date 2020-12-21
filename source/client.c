@@ -113,7 +113,6 @@ void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, S
 {
 	u32 *pixels = (u32*)malloc(sizeof(u32) * 1280 * 720);
 	i32 pitch = 720 * sizeof(u32);
-	//SDL_LockTexture(screen_texture, NULL, (void**)&pixels, &pitch);	
 	//write to pixels
 	u32 *pixel = pixels;
 	for (u32 y = 0; y < 720; ++y)
@@ -123,11 +122,12 @@ void draw_visible_world_subset(struct World *world_subset, SDL_Window *window, S
 			*pixel++ = 0xffbabeff;
 		}
 	}
-	memset(pixels, 255, 720 * 1280 * sizeof(u32));
+	//memset(pixels, 255, 720 * 1280 * sizeof(u32));
 
+	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
+	// apparently slower, but locking results in a segfault.
 	SDL_UpdateTexture(screen_texture, NULL, pixels, 1280 * sizeof(u32));
 
-	//SDL_UnlockTexture(screen_texture);
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
