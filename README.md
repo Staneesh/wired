@@ -37,4 +37,4 @@ To start a client use:
 
 ## Trello 
 
-If You are interested in the development process, see this [Trello page.](`https://trello.com/b/oqEIPyKN`)
+If You are interested in the development process, see this [Trello page.](https://trello.com/b/oqEIPyKN)
