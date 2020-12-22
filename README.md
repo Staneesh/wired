@@ -34,3 +34,9 @@ To start a server use:
 
 To start a client use:
 `./build/release/client`
+
+## Trello 
+
+If You are interested in the development process, see this Trello page:
+
+`https://trello.com/b/oqEIPyKN`
