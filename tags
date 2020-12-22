@@ -41,8 +41,8 @@ client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	typ
 color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
 compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds)$/;"	f	typeref:typename:void
 disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
-draw_colored_rectangle	source/client.c	/^void draw_colored_rectangle(u32* pixels, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
-draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(SDL_Texture *screen_texture, u32 *pixels, SDL_Renderer *renderer)$/;"	f	typeref:typename:void
+draw_colored_rectangle	source/client.c	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
+draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
 handle_keyboard_for_client	source/client.c	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
 handle_mouse_for_client	source/client.c	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
 i16	source/utils.h	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
@@ -66,6 +66,7 @@ real32	source/utils.h	/^typedef float real32;$/;"	t	typeref:typename:float
 real64	source/utils.h	/^typedef double real64;$/;"	t	typeref:typename:double
 recognize_client_key_press	source/shared.c	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
 recognize_client_key_release	source/shared.c	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
+render_tiles	source/client.c	/^void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)$/;"	f	typeref:typename:void
 send_to_clients	source/server.c	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f	typeref:typename:void
 sender	source/server.c	/^void sender(struct SenderWork* work)$/;"	f	typeref:typename:void
 setup_socket	source/client.c	/^void setup_socket(struct Client* client)$/;"	f	typeref:typename:void

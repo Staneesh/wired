@@ -108,12 +108,12 @@ void handle_mouse_for_client(struct Client *client, SDL_Event *event)
 	}
 }
 
-void draw_colored_rectangle(u32* pixels, u32 x_center, u32 y_center, 
+void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, 
 		u32 width, u32 height, u32 color)
 {
 	u32 x_start = x_center - width / 2;
 	u32 y_start = y_center - height / 2; 
-	u32 *pixel_start = pixels + y_start * 1280 + x_start;
+	u32 *pixel_start = pixels + y_start * window_width + x_start;
 	for (u32 y = y_start; y < y_start + height; ++y)
 	{
 		u32 *pixel = pixel_start;
@@ -121,40 +121,41 @@ void draw_colored_rectangle(u32* pixels, u32 x_center, u32 y_center,
 		{
 			*pixel++ = color;
 		}
-		pixel_start += 1280;
+		pixel_start += window_width;
 	}
 }
 
-void draw_visible_world_subset(SDL_Texture *screen_texture, u32 *pixels, SDL_Renderer *renderer)
+void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)
+{
+	draw_colored_rectangle(pixels, window_width, 20, 20, 10, 10, 0x00ff00ff); 
+}
+
+void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, 
+		u32 *pixels, SDL_Renderer *renderer, u32 window_width, u32 window_height)
 {
 	//write to pixels
 	u32 *pixel = pixels;
-	for (u32 y = 0; y < 720; ++y)
-	{
-		for (u32 x = 0; x < 1280; ++x)
-		{
-			*pixel++ = 0xff0000ff;
-		}
-	}
 
-	draw_colored_rectangle(pixels, 20, 20, 10, 10, 0x00ff00ff);
-	//memset(pixels, 255, 720 * 1280 * sizeof(u32));
+	memset(pixels, 0xffffffff, window_width * window_height * sizeof(u32));
+
+	render_tiles(world_subset, window_width, pixels);
 
 	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
 	// apparently slower, but locking results in a segfault.
-	SDL_UpdateTexture(screen_texture, NULL, pixels, 1280 * sizeof(u32));
-
-	SDL_RenderClear(renderer);
+	SDL_UpdateTexture(screen_texture, NULL, pixels, window_width * sizeof(u32));
+	
 	SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 
 int main(int argc, char** argv)
 {
+	const u32 window_width = 1280, window_height = 720;
+
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window *window = SDL_CreateWindow("Wired", 
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-			1280, 720, 0);
+			window_width, window_height, 0);
 
 	UNUSED(argc);
 	UNUSED(argv);
@@ -183,12 +184,12 @@ int main(int argc, char** argv)
 		printf("%s\n", SDL_GetError());
 
 	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888,
-			SDL_TEXTUREACCESS_STATIC, 1280, 720);
+			SDL_TEXTUREACCESS_STATIC, window_width, window_height);
 	if (!screen_texture)
 		printf("%s\n", SDL_GetError());
 		
 
-	u32 *pixels = (u32*)malloc(sizeof(u32) * 1280 * 720);
+	u32 *pixels = (u32*)malloc(sizeof(u32) * window_width * window_height);
 
 	while (is_running)
 	{
@@ -199,7 +200,7 @@ int main(int argc, char** argv)
 			handle_mouse_for_client(&client, &event);
 		}
 
-		draw_visible_world_subset(screen_texture, pixels, renderer);
+		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, window_width, window_height);
 
 		send(client.sock, &client, sizeof(client), 0);
 		recv(client.sock, &world_subset, sizeof(world_subset), 0);
