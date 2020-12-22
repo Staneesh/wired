@@ -108,8 +108,22 @@ void handle_mouse_for_client(struct Client *client, SDL_Event *event)
 	}
 }
 
-void draw_pixel(u32* pixels, u32 x_pos, u32 y_pos, u32 color)
-{}
+void draw_colored_rectangle(u32* pixels, u32 x_center, u32 y_center, 
+		u32 width, u32 height, u32 color)
+{
+	u32 x_start = x_center - width / 2;
+	u32 y_start = y_center - height / 2; 
+	u32 *pixel_start = pixels + y_start * 1280 + x_start;
+	for (u32 y = y_start; y < y_start + height; ++y)
+	{
+		u32 *pixel = pixel_start;
+		for (u32 x = x_start; x < x_start + width; ++x)
+		{
+			*pixel++ = color;
+		}
+		pixel_start += 1280;
+	}
+}
 
 void draw_visible_world_subset(SDL_Texture *screen_texture, u32 *pixels, SDL_Renderer *renderer)
 {
@@ -122,6 +136,8 @@ void draw_visible_world_subset(SDL_Texture *screen_texture, u32 *pixels, SDL_Ren
 			*pixel++ = 0xff0000ff;
 		}
 	}
+
+	draw_colored_rectangle(pixels, 20, 20, 10, 10, 0x00ff00ff);
 	//memset(pixels, 255, 720 * 1280 * sizeof(u32));
 
 	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
@@ -141,12 +157,10 @@ int main(int argc, char** argv)
 			1280, 720, 0);
 
 	UNUSED(argc);
-	//TODO(stanisz): copying a struct doesnt work apparently
 	UNUSED(argv);
 
 	struct Client client = {};
-	//TODO(stanisz): is it okay to assume disconnected by default
-	// until checked for connection (accept)?
+	
 	client.disconnected = 1;
 	client.port = 9002;
 	if (argc > 1)
@@ -162,11 +176,14 @@ int main(int argc, char** argv)
 
 	u8 is_running = 1;
 
-	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
+	//RESEARCH(stanisz): What flags should be passed to SDL_CreateRenderer and SDL_CreateTexture?
+	// Do they matter performance-wise if the rendering is cpu based?
+	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 	if (!renderer)
 		printf("%s\n", SDL_GetError());
 
-	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
+	SDL_Texture *screen_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888,
+			SDL_TEXTUREACCESS_STATIC, 1280, 720);
 	if (!screen_texture)
 		printf("%s\n", SDL_GetError());
 		

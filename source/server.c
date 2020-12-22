@@ -62,6 +62,7 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	{
 		//TODO(stanisz): copying a struct doesnt work apparently
 		//clients[i] = works[i].client_data;
+		//FIXME(stanisz): why?
 
 		
 		clients[i].disconnected = works[i].client_data.disconnected;
@@ -110,7 +111,7 @@ void setup_sockets(struct Client *clients, u32 n_clients)
 		assert(sock != -1);
 
 		int opt = 1;
-		//TODO(stanisz): What are those flags exactly?
+		//RESEARCH(stanisz): What are those flags exactly?
 		assert(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
 					&opt, sizeof(opt)) != -1);
 
@@ -124,7 +125,7 @@ void setup_sockets(struct Client *clients, u32 n_clients)
 					sizeof(client_address))
 				!= -1);
 
-		//TODO(stanisz): Whats the 5?
+		//RESEARCH(stanisz): Whats the 5?
 		assert(listen(sock, 5) != -1);
 
 		socklen_t len = sizeof(client_address);
@@ -141,7 +142,7 @@ void setup_sockets(struct Client *clients, u32 n_clients)
 
 void cleanup_sockets(struct Client *clients, u32 n_clients)
 {
-	//TODO(stanisz): Is it okay to close sockets, that
+	//RESEARCH(stanisz): Is it okay to close sockets, that
 	// are 0 (not created at all)?
 	for (u32 i = 0; i < n_clients; ++i)
 	{
@@ -149,8 +150,7 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 	}
 }
 
-void print_clients(struct Client clients[8], u32 n_clients)
-{
+void print_clients(struct Client clients[8], u32 n_clients) {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
 		if (clients[i].disconnected != 0)

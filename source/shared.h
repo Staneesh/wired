@@ -28,7 +28,6 @@ void recognize_client_key_release(struct Client* client, enum KeyIndex m);
 
 typedef struct Tile
 {
-	//TODO(stanisz): TODO!
 	u32 x, y; //NOTE(stanisz): Center of the tile
 	u32 color;
 	
