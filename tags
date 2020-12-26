@@ -7,9 +7,11 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 Building 🛠️	README.md	/^## Building 🛠️ $/;"	s
-Client	source/shared.hpp	/^typedef struct Client$/;"	s
-Client	source/shared.hpp	/^} Client;$/;"	t	typeref:struct:Client
+Client	source/shared.hpp	/^struct Client$/;"	s
+DVec2	source/maths.hpp	/^typedef Vec2<double> DVec2;$/;"	t	typeref:typename:Vec2<double>
 Dependencies ↘️	README.md	/^## Dependencies ↘️ $/;"	s
+FVec2	source/maths.hpp	/^typedef Vec2<float> FVec2;$/;"	t	typeref:typename:Vec2<float>
+IVec2	source/maths.hpp	/^typedef Vec2<int> IVec2;$/;"	t	typeref:typename:Vec2<int>
 KEYDOWN	source/shared.hpp	/^	KEYDOWN,$/;"	e	enum:KeyIndex
 KEYLEFT	source/shared.hpp	/^	KEYLEFT,$/;"	e	enum:KeyIndex
 KEYRIGHT	source/shared.hpp	/^	KEYRIGHT,$/;"	e	enum:KeyIndex
@@ -27,24 +29,28 @@ LOG_UINT	source/utils.hpp	/^#define LOG_UINT(/;"	d
 ListenerWork	source/server.cpp	/^struct ListenerWork$/;"	s	file:
 MATHS_H	source/maths.hpp	/^#define MATHS_H$/;"	d
 MOUSEPRESSED	source/shared.hpp	/^	MOUSEPRESSED,$/;"	e	enum:KeyIndex
-Point	source/maths.hpp	/^struct Point$/;"	s
 SHARED_H	source/shared.hpp	/^#define SHARED_H$/;"	d
 SenderWork	source/server.cpp	/^struct SenderWork$/;"	s	file:
-Tile	source/shared.hpp	/^typedef struct Tile$/;"	s
-Tile	source/shared.hpp	/^} Tile;$/;"	t	typeref:struct:Tile
+Tile	source/shared.hpp	/^struct Tile$/;"	s
 Trello	README.md	/^## Trello $/;"	s
 UNUSED	source/utils.hpp	/^#define UNUSED(/;"	d
 UTILS_H	source/utils.hpp	/^#define UTILS_H$/;"	d
-World	source/shared.hpp	/^typedef struct World$/;"	s
-World	source/shared.hpp	/^} World;$/;"	t	typeref:struct:World
+UVec2	source/maths.hpp	/^typedef Vec2<unsigned> UVec2;$/;"	t	typeref:typename:Vec2<unsigned>
+Vec2	source/maths.hpp	/^union Vec2$/;"	u
+World	source/shared.hpp	/^struct World$/;"	s
+__anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
 a	source/shared.hpp	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typeref:typename:u32
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
 client_data	source/server.cpp	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
 color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
 compute_world_subset	source/server.cpp	/^void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_/;"	f	typeref:typename:void
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T> &to_copy)$/;"	f	typeref:typename:Vec2<T>
 disconnected	source/shared.hpp	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
 draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
+elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2	typeref:typename:T[2]
 handle_keyboard_for_client	source/client.cpp	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
 handle_mouse_for_client	source/client.cpp	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
 i16	source/utils.hpp	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
@@ -77,10 +83,12 @@ sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:ListenerWork	typeref:typename:i
 sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32	file:
 sock	source/shared.hpp	/^	i32 sock;$/;"	m	struct:Client	typeref:typename:i32
 tile_size	source/shared.hpp	/^	u32 tile_size;$/;"	m	struct:World	typeref:typename:u32
-tiles	source/shared.hpp	/^	struct Tile tiles[16]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:struct:Tile[16]
+tiles	source/shared.hpp	/^	Tile tiles[16]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:typename:Tile[16]
 u16	source/utils.hpp	/^typedef uint16_t u16; $/;"	t	typeref:typename:uint16_t
 u32	source/utils.hpp	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
 u64	source/utils.hpp	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
 u8	source/utils.hpp	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
 wired	README.md	/^# wired$/;"	c
 world_subset	source/server.cpp	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
+x	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anonb617c4380108	typeref:typename:T
+y	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anonb617c4380108	typeref:typename:T

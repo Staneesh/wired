@@ -12,6 +12,7 @@
 // I dont see any reasons to do incremental building, 
 // so until then - its unity.
 #include "utils.cpp"
+#include "maths.cpp"
 #include "shared.cpp"
 
 void setup_socket(struct Client* client)

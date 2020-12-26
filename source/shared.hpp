@@ -11,7 +11,7 @@ enum KeyIndex
 };
 
 //TODO(stanisz): this should be serialized to handle endianness
-typedef struct Client
+struct Client
 {
 	i32 port;
 	i32 sock;
@@ -21,25 +21,25 @@ typedef struct Client
 	u32 keys_pressed_mask;
 	i32 mouse_x;
 	i32 mouse_y;
-} Client;
+};
 
-void recognize_client_key_press(struct Client* client, enum KeyIndex m);
-void recognize_client_key_release(struct Client* client, enum KeyIndex m);
+void recognize_client_key_press(Client* client, enum KeyIndex m);
+void recognize_client_key_release(Client* client, enum KeyIndex m);
 
-typedef struct Tile
+struct Tile
 {
 	u32 color;
 	
-} Tile;
+};
 
 //TODO(stanisz): this should be serialized to handle endianness
-typedef struct World
+struct World
 {
-	struct Tile tiles[16]; //NOTE(stanisz): 4x4 grid?
+	Tile tiles[16]; //NOTE(stanisz): 4x4 grid?
 	u32 n_tiles;
 	u32 tile_size;
 	u32 a; //NOTE(stanisz): test value
 
-} World;
+};
 
 #endif
