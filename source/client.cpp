@@ -11,8 +11,8 @@
 //NOTE(stanisz): Yes, this is a unity build. 
 // I dont see any reasons to do incremental building, 
 // so until then - its unity.
-#include "utils.c"
-#include "shared.c"
+#include "utils.cpp"
+#include "shared.cpp"
 
 void setup_socket(struct Client* client)
 {

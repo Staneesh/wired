@@ -24,10 +24,12 @@ LOG_NL	source/utils.h	/^#define LOG_NL /;"	d
 LOG_POINTER	source/utils.h	/^#define LOG_POINTER(/;"	d
 LOG_STRING	source/utils.h	/^#define LOG_STRING(/;"	d
 LOG_UINT	source/utils.h	/^#define LOG_UINT(/;"	d
-ListenerWork	source/server.c	/^struct ListenerWork$/;"	s	file:
+ListenerWork	source/server.cpp	/^struct ListenerWork$/;"	s	file:
+MATHS_H	source/maths.h	/^#define MATHS_H$/;"	d
 MOUSEPRESSED	source/shared.h	/^	MOUSEPRESSED,$/;"	e	enum:KeyIndex
+Point	source/maths.h	/^struct Point$/;"	s
 SHARED_H	source/shared.h	/^#define SHARED_H$/;"	d
-SenderWork	source/server.c	/^struct SenderWork$/;"	s	file:
+SenderWork	source/server.cpp	/^struct SenderWork$/;"	s	file:
 Tile	source/shared.h	/^typedef struct Tile$/;"	s
 Tile	source/shared.h	/^} Tile;$/;"	t	typeref:struct:Tile
 Trello	README.md	/^## Trello $/;"	s
@@ -36,43 +38,43 @@ UTILS_H	source/utils.h	/^#define UTILS_H$/;"	d
 World	source/shared.h	/^typedef struct World$/;"	s
 World	source/shared.h	/^} World;$/;"	t	typeref:struct:World
 a	source/shared.h	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typeref:typename:u32
-cleanup_sockets	source/server.c	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
-client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
+cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
+client_data	source/server.cpp	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
 color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_/;"	f	typeref:typename:void
+compute_world_subset	source/server.cpp	/^void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_/;"	f	typeref:typename:void
 disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
-draw_colored_rectangle	source/client.c	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
-draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
-handle_keyboard_for_client	source/client.c	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
-handle_mouse_for_client	source/client.c	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
+draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
+draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
+handle_keyboard_for_client	source/client.cpp	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
+handle_mouse_for_client	source/client.cpp	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
 i16	source/utils.h	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
 i32	source/utils.h	/^typedef int32_t i32; $/;"	t	typeref:typename:int32_t
 i64	source/utils.h	/^typedef int64_t i64; $/;"	t	typeref:typename:int64_t
 i8	source/utils.h	/^typedef int8_t i8; $/;"	t	typeref:typename:int8_t
-init_sdl	source/client.c	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
+init_sdl	source/client.cpp	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
 keys_pressed_mask	source/shared.h	/^	u32 keys_pressed_mask;$/;"	m	struct:Client	typeref:typename:u32
-listen_to_clients	source/server.c	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f	typeref:typename:void
-listener	source/server.c	/^void listener(struct ListenerWork* work)$/;"	f	typeref:typename:void
-main	source/client.c	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
-main	source/server.c	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
+listen_to_clients	source/server.cpp	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f	typeref:typename:void
+listener	source/server.cpp	/^void* listener(void *work_pass)$/;"	f	typeref:typename:void *
+main	source/client.cpp	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
+main	source/server.cpp	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
 mouse_x	source/shared.h	/^	i32 mouse_x;$/;"	m	struct:Client	typeref:typename:i32
 mouse_y	source/shared.h	/^	i32 mouse_y;$/;"	m	struct:Client	typeref:typename:i32
 n_tiles	source/shared.h	/^	u32 n_tiles;$/;"	m	struct:World	typeref:typename:u32
-port	source/server.c	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
-port	source/server.c	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
+port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
+port	source/server.cpp	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
 port	source/shared.h	/^	i32 port;$/;"	m	struct:Client	typeref:typename:i32
-print_clients	source/server.c	/^void print_clients(struct Client clients[8], u32 n_clients) {$/;"	f	typeref:typename:void
+print_clients	source/server.cpp	/^void print_clients(struct Client clients[8], u32 n_clients) {$/;"	f	typeref:typename:void
 real32	source/utils.h	/^typedef float real32;$/;"	t	typeref:typename:float
 real64	source/utils.h	/^typedef double real64;$/;"	t	typeref:typename:double
-recognize_client_key_press	source/shared.c	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-recognize_client_key_release	source/shared.c	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-render_tiles	source/client.c	/^void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)$/;"	f	typeref:typename:void
-send_to_clients	source/server.c	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f	typeref:typename:void
-sender	source/server.c	/^void sender(struct SenderWork* work)$/;"	f	typeref:typename:void
-setup_socket	source/client.c	/^void setup_socket(struct Client* client)$/;"	f	typeref:typename:void
-setup_sockets	source/server.c	/^void setup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
-sock	source/server.c	/^	i32 sock;$/;"	m	struct:ListenerWork	typeref:typename:i32	file:
-sock	source/server.c	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32	file:
+recognize_client_key_press	source/shared.cpp	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
+recognize_client_key_release	source/shared.cpp	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
+render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)$/;"	f	typeref:typename:void
+send_to_clients	source/server.cpp	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f	typeref:typename:void
+sender	source/server.cpp	/^void* sender(void *work_pass)$/;"	f	typeref:typename:void *
+setup_socket	source/client.cpp	/^void setup_socket(struct Client* client)$/;"	f	typeref:typename:void
+setup_sockets	source/server.cpp	/^void setup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
+sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:ListenerWork	typeref:typename:i32	file:
+sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32	file:
 sock	source/shared.h	/^	i32 sock;$/;"	m	struct:Client	typeref:typename:i32
 tile_size	source/shared.h	/^	u32 tile_size;$/;"	m	struct:World	typeref:typename:u32
 tiles	source/shared.h	/^	struct Tile tiles[16]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:struct:Tile[16]
@@ -81,4 +83,4 @@ u32	source/utils.h	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
 u64	source/utils.h	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
 u8	source/utils.h	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
 wired	README.md	/^# wired$/;"	c
-world_subset	source/server.c	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
+world_subset	source/server.cpp	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:

@@ -11,8 +11,8 @@
 //NOTE(stanisz): Yes, this is a unity build. 
 // I dont see any reasons to do incremental building, 
 // so until then - its unity.
-#include "utils.c"
-#include "shared.c"
+#include "utils.cpp"
+#include "shared.cpp"
 
 //NOTE(stanisz): Listeners and senders are separated now,
 // maybe it would be more efficient to create a thread 
@@ -31,12 +31,14 @@ struct SenderWork
 	World world_subset;
 };
 
-void listener(struct ListenerWork* work)
+void* listener(void *work_pass)
 {
+	ListenerWork *work = (ListenerWork *)work_pass;
 	assert(
 			recv(work->sock, &work->client_data,
 				sizeof(work->client_data), 0) != -1
 			);
+	return nullptr;
 }
 
 void listen_to_clients(struct Client *clients, const u32 n_listeners)
@@ -50,7 +52,7 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 		works[i].port = 9002 + i;
 		works[i].sock = clients[i].sock;
 
-		pthread_create(&thread_ids[i], 0, (void *)&listener, &works[i]);
+		pthread_create(&thread_ids[i], 0, &listener, &works[i]);
 	}
 
 	for (u32 i = 0; i < n_listeners; ++i)
@@ -73,12 +75,15 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	}
 }
 
-void sender(struct SenderWork* work)
+void* sender(void *work_pass)
 {
+	SenderWork *work = (SenderWork *)work_pass;
 	assert(
 			send(work->sock, &work->world_subset, 
 				sizeof(work->world_subset), 0) != -1
 			);
+
+	return nullptr;
 }
 
 void send_to_clients(struct Client *clients, struct World worlds[8], 
@@ -94,7 +99,7 @@ void send_to_clients(struct Client *clients, struct World worlds[8],
 		works[i].sock = clients[i].sock;
 		works[i].world_subset = worlds[i];
 
-		pthread_create(&thread_ids[i], 0, (void *)&sender, &works[i]);
+		pthread_create(&thread_ids[i], 0, &sender, &works[i]);
 	}
 
 	for (u32 i = 0; i < n_clients; ++i)
@@ -180,11 +185,17 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client cl
 			{
 				u32 r = 255 / (x + y +1);
 
-				u32 x_leftup = x * worlds[i].tile_size;
-				u32 y_leftup = y * worlds[i].tile_size;
-				u32 x_rightdown = x_leftup + worlds[i].tile_size;
-				u32 y_rightdown = y_leftup + worlds[i].tile_size;
+				//TODO(stanisz): This code computing the positions of the vertices of a tile 
+				// is similar to the code in client which computes the center of a tile. 
+				// Should be moved to the shared section and abstracted somehow.
+				i32 x_leftup = x * worlds[i].tile_size;
+				i32 y_leftup = y * worlds[i].tile_size;
+				i32 x_rightdown = x_leftup + worlds[i].tile_size;
+				i32 y_rightdown = y_leftup + worlds[i].tile_size;
 
+				//TODO(stanisz): Fix this! Selecting clients is VERY laggy and the tile selection 
+				// is not as smooth as i would like it to be. Sometimes no tile is selected even though
+				// mouse is hovering over a tile. 
 				for (u32 nc = 0; nc < n_clients; ++nc)
 				{
 					if (clients[nc].mouse_x > x_leftup && clients[nc].mouse_x < x_rightdown)
