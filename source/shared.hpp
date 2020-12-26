@@ -29,7 +29,6 @@ void recognize_client_key_release(Client* client, enum KeyIndex m);
 struct Tile
 {
 	u32 color;
-	
 };
 
 //TODO(stanisz): this should be serialized to handle endianness
@@ -41,5 +40,7 @@ struct World
 	u32 a; //NOTE(stanisz): test value
 
 };
+
+UVec2 get_tile_origin(u32 y_tile, u32 x_tile);
 
 #endif

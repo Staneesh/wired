@@ -12,10 +12,10 @@ union Vec2
 	T elements[2];
 };
 
-typedef Vec2<float> FVec2;
-typedef Vec2<unsigned> UVec2;
-typedef Vec2<int> IVec2;
-typedef Vec2<double> DVec2;
+using FVec2 = Vec2<float>;
+using DVec2 = Vec2<double>;
+using IVec2 = Vec2<int>;
+using UVec2 = Vec2<unsigned>;
 
 template<typename T>
 Vec2<T> create_vec2(const T &x, const T &y);
@@ -25,5 +25,6 @@ Vec2<T> create_vec2(const Vec2<T> &to_copy);
 
 template<typename T>
 Vec2<T> create_vec2(const T &x_and_y);
+
 
 #endif

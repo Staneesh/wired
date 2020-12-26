@@ -8,10 +8,10 @@
 !_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 Building 🛠️	README.md	/^## Building 🛠️ $/;"	s
 Client	source/shared.hpp	/^struct Client$/;"	s
-DVec2	source/maths.hpp	/^typedef Vec2<double> DVec2;$/;"	t	typeref:typename:Vec2<double>
+DVec2	source/maths.hpp	/^using DVec2 = Vec2<double>;$/;"	t	typeref:typename:Vec2<double>
 Dependencies ↘️	README.md	/^## Dependencies ↘️ $/;"	s
-FVec2	source/maths.hpp	/^typedef Vec2<float> FVec2;$/;"	t	typeref:typename:Vec2<float>
-IVec2	source/maths.hpp	/^typedef Vec2<int> IVec2;$/;"	t	typeref:typename:Vec2<int>
+FVec2	source/maths.hpp	/^using FVec2 = Vec2<float>;$/;"	t	typeref:typename:Vec2<float>
+IVec2	source/maths.hpp	/^using IVec2 = Vec2<int>;$/;"	t	typeref:typename:Vec2<int>
 KEYDOWN	source/shared.hpp	/^	KEYDOWN,$/;"	e	enum:KeyIndex
 KEYLEFT	source/shared.hpp	/^	KEYLEFT,$/;"	e	enum:KeyIndex
 KEYRIGHT	source/shared.hpp	/^	KEYRIGHT,$/;"	e	enum:KeyIndex
@@ -35,7 +35,7 @@ Tile	source/shared.hpp	/^struct Tile$/;"	s
 Trello	README.md	/^## Trello $/;"	s
 UNUSED	source/utils.hpp	/^#define UNUSED(/;"	d
 UTILS_H	source/utils.hpp	/^#define UTILS_H$/;"	d
-UVec2	source/maths.hpp	/^typedef Vec2<unsigned> UVec2;$/;"	t	typeref:typename:Vec2<unsigned>
+UVec2	source/maths.hpp	/^using UVec2 = Vec2<unsigned>;$/;"	t	typeref:typename:Vec2<unsigned>
 Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
@@ -51,6 +51,7 @@ disconnected	source/shared.hpp	/^	u32 disconnected;$/;"	m	struct:Client	typeref:
 draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
 elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2	typeref:typename:T[2]
+get_tile_origin	source/shared.cpp	/^UVec2 get_tile_origin(u32 y_tile, u32 x_tile, u32 tile_size)$/;"	f	typeref:typename:UVec2
 handle_keyboard_for_client	source/client.cpp	/^u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:u8
 handle_mouse_for_client	source/client.cpp	/^void handle_mouse_for_client(struct Client *client, SDL_Event *event)$/;"	f	typeref:typename:void
 i16	source/utils.hpp	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
