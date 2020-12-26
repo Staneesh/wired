@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "shared.hpp"
 
 void recognize_client_key_press(struct Client* client, enum KeyIndex m)
 {
