@@ -39,7 +39,7 @@ a	source/shared.h	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typ
 cleanup_sockets	source/server.c	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
 client_data	source/server.c	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
 color	source/shared.h	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds)$/;"	f	typeref:typename:void
+compute_world_subset	source/server.c	/^void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_/;"	f	typeref:typename:void
 disconnected	source/shared.h	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
 draw_colored_rectangle	source/client.c	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.c	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void

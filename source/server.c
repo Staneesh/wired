@@ -165,18 +165,42 @@ void print_clients(struct Client clients[8], u32 n_clients) {
 }
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subset(struct World worlds[8], u32 n_worlds)
+void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_clients)
 {
 	for (u32 i = 0; i < n_worlds; ++i)
 	{
 		worlds[i].a = i + 112;
 		worlds[i].n_tiles = 16;
 		worlds[i].tile_size = 720 / 4;   
-		for (u32 j = 0; j < worlds[i].n_tiles; ++j)
+
+		struct Tile *current_tile = worlds[i].tiles;
+		for (u32 y = 0; y < 4; ++y)
 		{
-			u32 r = 255 / (j+1);
-			u32 color = 0x000000ff | (r << 28);
-			worlds[i].tiles[j].color = color;
+			for (u32 x = 0; x < 4; ++x)
+			{
+				u32 r = 255 / (x + y +1);
+
+				u32 x_leftup = x * worlds[i].tile_size;
+				u32 y_leftup = y * worlds[i].tile_size;
+				u32 x_rightdown = x_leftup + worlds[i].tile_size;
+				u32 y_rightdown = y_leftup + worlds[i].tile_size;
+
+				for (u32 nc = 0; nc < n_clients; ++nc)
+				{
+					if (clients[nc].mouse_x > x_leftup && clients[nc].mouse_x < x_rightdown)
+					{
+						if (clients[nc].mouse_y > y_leftup && clients[nc].mouse_y < y_rightdown)
+						{
+							r = 0;
+						}
+					}
+				}
+				
+				u32 color = 0x000000ff | (r << 28);
+
+				current_tile->color = color;
+				++current_tile;
+			}
 		}
 	}
 }
@@ -199,7 +223,7 @@ int main(int argc, char** argv)
 	{
 		listen_to_clients(clients, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subset(worlds, n_clients);
+		compute_world_subset(worlds, n_clients, clients, n_clients);
 		send_to_clients(clients, worlds, n_clients);
 	}
 	
