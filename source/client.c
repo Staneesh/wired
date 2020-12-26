@@ -127,15 +127,24 @@ void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_c
 
 void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)
 {
-	draw_colored_rectangle(pixels, window_width, 20, 20, 10, 10, 0x00ff00ff); 
+	struct Tile *current_tile = world_subset->tiles;
+	for (u32 y = 0; y < 4; ++y)
+	{
+		for (u32 x = 0; x < 4; ++x)
+		{
+			u32 tile_size = world_subset->tile_size;
+			u32 x_center = tile_size / 2 + tile_size * x;		
+			u32 y_center = tile_size / 2 + tile_size * y;
+
+			draw_colored_rectangle(pixels, window_width, x_center, y_center, tile_size, tile_size, current_tile->color);
+			++current_tile;	
+		}
+	}
 }
 
 void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, 
 		u32 *pixels, SDL_Renderer *renderer, u32 window_width, u32 window_height)
 {
-	//write to pixels
-	u32 *pixel = pixels;
-
 	memset(pixels, 0xffffffff, window_width * window_height * sizeof(u32));
 
 	render_tiles(world_subset, window_width, pixels);

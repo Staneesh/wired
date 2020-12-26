@@ -82,5 +82,3 @@ u64	source/utils.h	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
 u8	source/utils.h	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
 wired	README.md	/^# wired$/;"	c
 world_subset	source/server.c	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
-x	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile	typeref:typename:u32
-y	source/shared.h	/^	u32 x, y; \/\/NOTE(stanisz): Center of the tile$/;"	m	struct:Tile	typeref:typename:u32

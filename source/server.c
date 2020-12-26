@@ -171,12 +171,12 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds)
 	{
 		worlds[i].a = i + 112;
 		worlds[i].n_tiles = 16;
-		worlds[i].tile_size = 1280 / 4;   
+		worlds[i].tile_size = 720 / 4;   
 		for (u32 j = 0; j < worlds[i].n_tiles; ++j)
 		{
-			worlds[i].tiles[j].x = j % 4;
-			worlds[i].tiles[j].y = j / 4;
-			worlds[i].tiles[j].color = 0xff00ffff;
+			u32 r = 255 / (j+1);
+			u32 color = 0x000000ff | (r << 28);
+			worlds[i].tiles[j].color = color;
 		}
 	}
 }
