@@ -11,9 +11,15 @@ union Vec2
 
 	T elements[2];
 
+	void operator=(const Vec2<T> &other);
+
 	Vec2<T> operator+=(const Vec2<T> &other);
 	Vec2<T> operator-=(const Vec2<T> &other);
 	Vec2<T> operator*=(const T &value);
+
+	Vec2<T>(const T &v1, const T &v2);
+	Vec2<T>(const Vec2<T> &to_copy);
+	Vec2<T>(const T &x_and_y);
 };
 
 using FVec2 = Vec2<float>;

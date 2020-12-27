@@ -41,6 +41,6 @@ struct World
 
 };
 
-UVec2 get_tile_origin(u32 y_tile, u32 x_tile);
+UVec2 get_tile_origin(u32 y_tile, u32 x_tile, u32 tile_size);
 
 #endif

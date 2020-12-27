@@ -186,22 +186,21 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client cl
 			{
 				u32 r = 255 / (x + y +1);
 
-				//TODO(stanisz): This code computing the positions of the vertices of a tile 
-				// is similar to the code in client which computes the center of a tile. 
-				// Should be moved to the shared section and abstracted somehow.
-				i32 x_leftup = x * worlds[i].tile_size;
-				i32 y_leftup = y * worlds[i].tile_size;
-				i32 x_rightdown = x_leftup + worlds[i].tile_size;
-				i32 y_rightdown = y_leftup + worlds[i].tile_size;
-
+				u32 tile_size = worlds[i].tile_size;
+				UVec2 leftup = get_tile_origin(x, y, tile_size);
+				UVec2 rightdown = leftup + UVec2(tile_size); 
+				
 				//TODO(stanisz): Fix this! Selecting clients is VERY laggy and the tile selection 
 				// is not as smooth as i would like it to be. Sometimes no tile is selected even though
 				// mouse is hovering over a tile. 
 				for (u32 nc = 0; nc < n_clients; ++nc)
 				{
-					if (clients[nc].mouse_x > x_leftup && clients[nc].mouse_x < x_rightdown)
+					u32 mouse_x = clients[nc].mouse_x;
+					u32 mouse_y = clients[nc].mouse_y;
+
+					if (mouse_x > leftup.x && mouse_x < rightdown.x)
 					{
-						if (clients[nc].mouse_y > y_leftup && clients[nc].mouse_y < y_rightdown)
+						if (mouse_y > leftup.y && mouse_y < rightdown.y)
 						{
 							r = 0;
 						}

@@ -134,10 +134,9 @@ void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)
 		for (u32 x = 0; x < 4; ++x)
 		{
 			u32 tile_size = world_subset->tile_size;
-			u32 x_center = tile_size / 2 + tile_size * x;		
-			u32 y_center = tile_size / 2 + tile_size * y;
+			UVec2 center = get_tile_center(x, y, tile_size);
 
-			draw_colored_rectangle(pixels, window_width, x_center, y_center, tile_size, tile_size, current_tile->color);
+			draw_colored_rectangle(pixels, window_width, center.x, center.y, tile_size, tile_size, current_tile->color);
 			++current_tile;	
 		}
 	}

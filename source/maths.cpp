@@ -7,7 +7,7 @@ Vec2<T> create_vec2(const T &x, const T &y)
 }
 
 template<typename T>
-Vec2<T> create_vec2(const Vec2<T> &to_copy)
+Vec2<T> create_vec2(const Vec2<T>& to_copy)
 {
 	return {to_copy.x, to_copy.y};
 }
@@ -34,6 +34,13 @@ template<typename T>
 Vec2<T> scale_vec2(const Vec2<T> &a, const T &value)
 {
 	return {a.x * value, a.y * value};
+}
+
+template<typename T>
+void Vec2<T>::operator=(const Vec2<T> &other)
+{
+	x = other.x;
+	y = other.y;
 }
 
 template<typename T>
@@ -72,3 +79,23 @@ Vec2<T> Vec2<T>::operator*=(const T &value)
 	return scale_vec2(*this, value);
 }
 
+template<typename T>
+Vec2<T>::Vec2(const T &v1, const T &v2)
+{
+	x = v1;
+	y = v2;
+}
+
+template<typename T>
+Vec2<T>::Vec2(const Vec2<T> &to_copy)
+{
+	x = to_copy.x;
+	y = to_copy.y;
+}
+
+template<typename T>
+Vec2<T>::Vec2(const T &x_and_y)
+{
+	x = x_and_y;
+	y = x_and_y;
+}

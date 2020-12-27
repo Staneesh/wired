@@ -36,6 +36,9 @@ Trello	README.md	/^## Trello $/;"	s
 UNUSED	source/utils.hpp	/^#define UNUSED(/;"	d
 UTILS_H	source/utils.hpp	/^#define UTILS_H$/;"	d
 UVec2	source/maths.hpp	/^using UVec2 = Vec2<unsigned>;$/;"	t	typeref:typename:Vec2<unsigned>
+Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const T &v1, const T &v2)$/;"	f	class:Vec2
+Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const T &x_and_y)$/;"	f	class:Vec2
+Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const Vec2<T> &to_copy)$/;"	f	class:Vec2
 Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
@@ -47,7 +50,7 @@ color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
 compute_world_subset	source/server.cpp	/^void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_/;"	f	typeref:typename:void
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
-create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T> &to_copy)$/;"	f	typeref:typename:Vec2<T>
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
 disconnected	source/shared.hpp	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
 draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
@@ -75,6 +78,7 @@ operator +	source/maths.cpp	/^Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> 
 operator +=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator+=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
 operator -	source/maths.cpp	/^Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
 operator -=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
+operator =	source/maths.cpp	/^void Vec2<T>::operator=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
 port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
 port	source/server.cpp	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
 port	source/shared.hpp	/^	i32 port;$/;"	m	struct:Client	typeref:typename:i32
