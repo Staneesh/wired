@@ -42,5 +42,11 @@ struct World
 };
 
 UVec2 get_tile_origin(u32 y_tile, u32 x_tile, u32 tile_size);
+UVec2 get_tile_center(u32 x_tile, u32 y_tile, u32 tile_size);
+
+u32 pack_color(u8 r, u8 g, u8 b, u8 a);
+
+template<typename T>
+T lerp(const T &v1, const T &v2, float t);
 
 #endif

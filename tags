@@ -65,6 +65,7 @@ i64	source/utils.hpp	/^typedef int64_t i64; $/;"	t	typeref:typename:int64_t
 i8	source/utils.hpp	/^typedef int8_t i8; $/;"	t	typeref:typename:int8_t
 init_sdl	source/client.cpp	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
 keys_pressed_mask	source/shared.hpp	/^	u32 keys_pressed_mask;$/;"	m	struct:Client	typeref:typename:u32
+lerp	source/shared.cpp	/^T lerp(const T &v1, const T &v2, float t)$/;"	f	typeref:typename:T
 listen_to_clients	source/server.cpp	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f	typeref:typename:void
 listener	source/server.cpp	/^void* listener(void *work_pass)$/;"	f	typeref:typename:void *
 main	source/client.cpp	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
@@ -79,6 +80,7 @@ operator +=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator+=(const Vec2<T> &other)
 operator -	source/maths.cpp	/^Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
 operator -=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
 operator =	source/maths.cpp	/^void Vec2<T>::operator=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
+pack_color	source/shared.cpp	/^u32 pack_color(u8 r, u8 g, u8 b, u8 a)$/;"	f	typeref:typename:u32
 port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
 port	source/server.cpp	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
 port	source/shared.hpp	/^	i32 port;$/;"	m	struct:Client	typeref:typename:i32

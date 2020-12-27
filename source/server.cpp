@@ -207,7 +207,7 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client cl
 					}
 				}
 				
-				u32 color = 0x000000ff | (r << 28);
+				u32 color = 0x000000ff | (r << 24);
 
 				current_tile->color = color;
 				++current_tile;
