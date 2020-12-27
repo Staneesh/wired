@@ -10,6 +10,10 @@ union Vec2
 	};
 
 	T elements[2];
+
+	Vec2<T> operator+=(const Vec2<T> &other);
+	Vec2<T> operator-=(const Vec2<T> &other);
+	Vec2<T> operator*=(const T &value);
 };
 
 using FVec2 = Vec2<float>;
@@ -26,5 +30,25 @@ Vec2<T> create_vec2(const Vec2<T> &to_copy);
 template<typename T>
 Vec2<T> create_vec2(const T &x_and_y);
 
+template<typename T>
+Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b);
+
+//ROBUSTNESS(stanisz): What happens if T is unsigned? I want 
+// the compiler (or the program) to warn the user that there
+// can be unsigned subtraction there!
+template<typename T>
+Vec2<T> subtract_vec2(const Vec2<T> &a, const Vec2<T> &b);
+
+template<typename T>
+Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> &b);
+
+template<typename T>
+Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b);
+
+template<typename T>
+Vec2<T> scale_vec2(const Vec2<T> &a, const T &value);
+
+template<typename T>
+Vec2<T> operator*(const Vec2<T> &a, const T &value);
 
 #endif

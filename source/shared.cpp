@@ -21,6 +21,5 @@ UVec2 get_tile_origin(u32 x_tile, u32 y_tile, u32 tile_size)
 UVec2 get_tile_center(u32 x_tile, u32 y_tile, u32 tile_size)
 {
 	return get_tile_origin(x_tile, y_tile, tile_size) + create_vec2(tile_size / 2);
-
-
+}
 
