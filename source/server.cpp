@@ -155,7 +155,6 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 		close(clients[i].sock);
 	}
 }
-
 void print_clients(struct Client clients[8], u32 n_clients) {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
@@ -171,22 +170,22 @@ void print_clients(struct Client clients[8], u32 n_clients) {
 }
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client clients[8], u32 n_clients)
+void compute_world_subset(World *true_world, World world_subsets[8], u32 n_worlds, Client clients[8], u32 n_clients)
 {
 	for (u32 i = 0; i < n_worlds; ++i)
 	{
-		worlds[i].a = i + 112;
-		worlds[i].n_tiles = 16;
-		worlds[i].tile_size = 720 / 4;   
+		world_subsets[i].a = i + 112;
+		world_subsets[i].n_tiles = 16;
+		world_subsets[i].tile_size = 720 / 4;   
 
-		struct Tile *current_tile = worlds[i].tiles;
+		struct Tile *current_tile = world_subsets[i].tiles;
 		for (u32 y = 0; y < 4; ++y)
 		{
 			for (u32 x = 0; x < 4; ++x)
 			{
-				u32 r = 255 / (x + y +1);
+				u32 r = true_world->tiles[x].color & 0xff0000ff;
 
-				u32 tile_size = worlds[i].tile_size;
+				u32 tile_size = world_subsets[i].tile_size;
 				UVec2 leftup = get_tile_origin(x, y, tile_size);
 				UVec2 rightdown = leftup + UVec2(tile_size); 
 				
@@ -216,6 +215,22 @@ void compute_world_subset(struct World worlds[8], u32 n_worlds, struct Client cl
 	}
 }
 
+World generate_world()
+{
+	World result = {};
+	result.n_tiles = 10 * 10;	
+	result.tile_size = 720 / 10;
+	result.a = 123123l;
+
+	for (u32 i_tile = 0; i_tile < result.n_tiles; ++i_tile)
+	{
+		u32 r = lerp(100, 255, (float)i_tile / result.n_tiles);
+		result.tiles[i_tile].color = pack_color(r, 25, 50, 255);
+	}
+
+	return result;
+}
+
 int main(int argc, char** argv)
 {
 	u32 n_clients = 1;
@@ -225,17 +240,19 @@ int main(int argc, char** argv)
 		n_clients = atoi(argv[1]);
 	}
 
-	struct Client clients[8];
+	Client clients[8];
 	setup_sockets(clients, n_clients);
 
-	struct World worlds[8] = {};
+	World true_world = generate_world();
+
+	World world_subsets[8] = {};
 
 	while(1)
 	{
 		listen_to_clients(clients, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subset(worlds, n_clients, clients, n_clients);
-		send_to_clients(clients, worlds, n_clients);
+		compute_world_subset(&true_world, world_subsets, n_clients, clients, n_clients);
+		send_to_clients(clients, world_subsets, n_clients);
 	}
 	
 	cleanup_sockets(clients, n_clients);
