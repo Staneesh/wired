@@ -38,6 +38,7 @@ struct World
 	Tile tiles[100]; 
 	u32 n_tiles;
 	u32 tile_size; //NOTE(stanisz): this should be relative for each client - camera!
+	UVec2 camera_position;
 };
 
 UVec2 get_tile_origin(u32 y_tile, u32 x_tile, u32 tile_size);

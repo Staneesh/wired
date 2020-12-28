@@ -63,14 +63,15 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
-		//TODO(stanisz): copying a struct doesnt work apparently
-		//clients[i] = works[i].client_data;
+		//TODO(stanisz): copying a struct normally doesnt work apparently.
+		// I have to store old values of sock and port, because setting them
+		// causes the following send to fail.
+		u32 old_port = clients[i].port;
+		u32 old_sock = clients[i].sock;
+		clients[i] = works[i].client_data;
+		clients[i].sock = old_sock;
+		clients[i].port = old_port;
 		//FIXME(stanisz): why?
-		
-		clients[i].disconnected = works[i].client_data.disconnected;
-		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
-		clients[i].mouse_x = works[i].client_data.mouse_x;
-		clients[i].mouse_y = works[i].client_data.mouse_y;
 	}
 }
 
