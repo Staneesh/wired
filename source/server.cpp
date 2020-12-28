@@ -2,6 +2,8 @@
 #include <netinet/in.h>
 #include <pthread.h>
 
+#include <SDL2/SDL.h>
+
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -34,7 +36,7 @@ struct SenderWork
 
 struct ClientParams
 {
-
+	UVec2 camera_position;
 };
 
 void* listener(void *work_pass)
@@ -230,12 +232,24 @@ int main(int argc, char** argv)
 
 	World world_subsets[8] = {};
 
+	ClientParams client_params[8] = {};	
+
+	u64 last_time = SDL_GetPerformanceCounter();
+	float delta_time = 0;
+	
 	while(1)
 	{
 		listen_to_clients(client_inputs, n_clients);
 		//print_clients(clients, n_clients);
 		compute_world_subsets(&true_world, world_subsets, client_inputs, n_clients);
 		send_to_clients(client_inputs, world_subsets, n_clients);
+
+
+		u64 current_time = SDL_GetPerformanceCounter();
+		delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
+		LOG_FLOAT(delta_time);
+
+		last_time = current_time;
 	}
 	
 	cleanup_sockets(client_inputs, n_clients);
