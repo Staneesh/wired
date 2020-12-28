@@ -129,16 +129,14 @@ void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_c
 void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)
 {
 	struct Tile *current_tile = world_subset->tiles;
-	for (u32 y = 0; y < 4; ++y)
+	for (u32 tile_index = 0; tile_index < world_subset->n_tiles; ++tile_index)
 	{
-		for (u32 x = 0; x < 4; ++x)
-		{
-			u32 tile_size = world_subset->tile_size;
-			UVec2 center = get_tile_center(x, y, tile_size);
+		IVec2 relative_position = current_tile->center_position - IVec2(-800);
+		draw_colored_rectangle(pixels, window_width, 
+				relative_position.x, relative_position.y,
+				world_subset->tile_size, world_subset->tile_size, current_tile->color);
 
-			draw_colored_rectangle(pixels, window_width, center.x, center.y, tile_size, tile_size, current_tile->color);
-			++current_tile;	
-		}
+		++current_tile;	
 	}
 }
 

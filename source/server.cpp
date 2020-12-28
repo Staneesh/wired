@@ -72,7 +72,6 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
 		clients[i].mouse_x = works[i].client_data.mouse_x;
 		clients[i].mouse_y = works[i].client_data.mouse_y;
-		
 	}
 }
 
@@ -170,62 +169,45 @@ void print_clients(struct Client clients[8], u32 n_clients) {
 }
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subset(World *true_world, World world_subsets[8], u32 n_worlds, Client clients[8], u32 n_clients)
+void compute_world_subsets(World *true_world, World world_subsets[8], Client clients[8], u32 n_worlds)
 {
-	for (u32 i = 0; i < n_worlds; ++i)
+	u32 CLIENT_INITIAL_VISIBILITY = 600;
+	for (u32 world_subset_index = 0; world_subset_index < n_worlds; ++world_subset_index)
 	{
-		world_subsets[i].a = i + 112;
-		world_subsets[i].n_tiles = 16;
-		world_subsets[i].tile_size = 720 / 4;   
+		world_subsets[world_subset_index].n_tiles = 0;
 
-		struct Tile *current_tile = world_subsets[i].tiles;
-		for (u32 y = 0; y < 4; ++y)
+		for (u32 true_world_tile_index = 0; true_world_tile_index < true_world->n_tiles; ++true_world_tile_index)
 		{
-			for (u32 x = 0; x < 4; ++x)
+			Tile *current_tile = &true_world->tiles[true_world_tile_index];
+
+			if (length_vec2(current_tile->center_position) < CLIENT_INITIAL_VISIBILITY)
 			{
-				u32 r = true_world->tiles[x].color & 0xff0000ff;
-
-				u32 tile_size = world_subsets[i].tile_size;
-				UVec2 leftup = get_tile_origin(x, y, tile_size);
-				UVec2 rightdown = leftup + UVec2(tile_size); 
-				
-				//TODO(stanisz): Fix this! Selecting clients is VERY laggy and the tile selection 
-				// is not as smooth as i would like it to be. Sometimes no tile is selected even though
-				// mouse is hovering over a tile. 
-				for (u32 nc = 0; nc < n_clients; ++nc)
-				{
-					u32 mouse_x = clients[nc].mouse_x;
-					u32 mouse_y = clients[nc].mouse_y;
-
-					if (mouse_x > leftup.x && mouse_x < rightdown.x)
-					{
-						if (mouse_y > leftup.y && mouse_y < rightdown.y)
-						{
-							r = 0;
-						}
-					}
-				}
-				
-				u32 color = pack_color(r, 0, 0, 255);
-
-				current_tile->color = color;
-				++current_tile;
+				world_subsets[world_subset_index].tiles[world_subsets[world_subset_index].n_tiles++] = *current_tile;
 			}
 		}
+
+		world_subsets[world_subset_index].tile_size = 720 / 4;   
 	}
 }
 
 World generate_world()
 {
 	World result = {};
-	result.n_tiles = 10 * 10;	
-	result.tile_size = 720 / 10;
-	result.a = 123123l;
+	u32 tiles_on_side = 10;
+	result.n_tiles = tiles_on_side * tiles_on_side;	
+	result.tile_size = 720 / 4;
 
 	for (u32 i_tile = 0; i_tile < result.n_tiles; ++i_tile)
 	{
+		u32 y_level = i_tile / tiles_on_side; 
+		u32 x_level = i_tile % tiles_on_side;
+		IVec2 origin_coordinates = (IVec2(x_level, y_level) - IVec2(tiles_on_side / 2)) * (int)result.tile_size;
+		LOG_UINT(origin_coordinates.x);
+		LOG_UINT(origin_coordinates.y);
+
 		u32 r = lerp(100, 255, (float)i_tile / result.n_tiles);
 		result.tiles[i_tile].color = pack_color(r, 25, 50, 255);
+		result.tiles[i_tile].center_position = origin_coordinates + IVec2((int)result.tile_size / 2);
 	}
 
 	return result;
@@ -251,7 +233,7 @@ int main(int argc, char** argv)
 	{
 		listen_to_clients(clients, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subset(&true_world, world_subsets, n_clients, clients, n_clients);
+		compute_world_subsets(&true_world, world_subsets, clients, n_clients);
 		send_to_clients(clients, world_subsets, n_clients);
 	}
 	

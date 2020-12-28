@@ -99,3 +99,9 @@ Vec2<T>::Vec2(const T &x_and_y)
 	x = x_and_y;
 	y = x_and_y;
 }
+
+template<typename T>
+float length_vec2(const Vec2<T> &a)
+{
+	return sqrt((float)a.x * a.x + (float)a.y * a.y);
+}

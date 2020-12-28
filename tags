@@ -44,10 +44,11 @@ World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
 a	source/shared.hpp	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typeref:typename:u32
 add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
+center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	typeref:typename:IVec2
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
 client_data	source/server.cpp	/^	Client client_data;$/;"	m	struct:ListenerWork	typeref:typename:Client	file:
 color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subset	source/server.cpp	/^void compute_world_subset(World *true_world, World world_subsets[8], u32 n_worlds, Client client/;"	f	typeref:typename:void
+compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, World world_subsets[8], Client clients[8], u32 n_w/;"	f	typeref:typename:void
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
@@ -66,6 +67,7 @@ i64	source/utils.hpp	/^typedef int64_t i64; $/;"	t	typeref:typename:int64_t
 i8	source/utils.hpp	/^typedef int8_t i8; $/;"	t	typeref:typename:int8_t
 init_sdl	source/client.cpp	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
 keys_pressed_mask	source/shared.hpp	/^	u32 keys_pressed_mask;$/;"	m	struct:Client	typeref:typename:u32
+length_vec2	source/maths.cpp	/^float length_vec2(const Vec2<T> &a)$/;"	f	typeref:typename:float
 lerp	source/shared.cpp	/^T lerp(const T &v1, const T &v2, float t)$/;"	f	typeref:typename:T
 listen_to_clients	source/server.cpp	/^void listen_to_clients(struct Client *clients, const u32 n_listeners)$/;"	f	typeref:typename:void
 listener	source/server.cpp	/^void* listener(void *work_pass)$/;"	f	typeref:typename:void *

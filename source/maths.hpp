@@ -1,6 +1,8 @@
 #ifndef MATHS_H
 #define MATHS_H
 
+#include <cmath>
+
 template<typename T>
 union Vec2
 {
@@ -12,6 +14,7 @@ union Vec2
 	T elements[2];
 
 	void operator=(const Vec2<T> &other);
+	Vec2<T>(){}
 
 	Vec2<T> operator+=(const Vec2<T> &other);
 	Vec2<T> operator-=(const Vec2<T> &other);
@@ -46,15 +49,17 @@ template<typename T>
 Vec2<T> subtract_vec2(const Vec2<T> &a, const Vec2<T> &b);
 
 template<typename T>
+Vec2<T> scale_vec2(const Vec2<T> &a, const T &value);
+
+template<typename T>
 Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> &b);
 
 template<typename T>
 Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b);
 
 template<typename T>
-Vec2<T> scale_vec2(const Vec2<T> &a, const T &value);
-
-template<typename T>
 Vec2<T> operator*(const Vec2<T> &a, const T &value);
 
+template<typename T>
+float length_vec2(const Vec2<T> &a);
 #endif

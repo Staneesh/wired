@@ -28,6 +28,7 @@ void recognize_client_key_release(Client* client, enum KeyIndex m);
 
 struct Tile
 {
+	IVec2 center_position;
 	u32 color;
 };
 
