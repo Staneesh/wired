@@ -66,7 +66,6 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 		//TODO(stanisz): copying a struct doesnt work apparently
 		//clients[i] = works[i].client_data;
 		//FIXME(stanisz): why?
-
 		
 		clients[i].disconnected = works[i].client_data.disconnected;
 		clients[i].keys_pressed_mask = works[i].client_data.keys_pressed_mask;
@@ -171,7 +170,7 @@ void print_clients(struct Client clients[8], u32 n_clients) {
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
 void compute_world_subsets(World *true_world, World world_subsets[8], Client clients[8], u32 n_worlds)
 {
-	u32 CLIENT_INITIAL_VISIBILITY = 600;
+	u32 CLIENT_INITIAL_VISIBILITY = 1600;
 	for (u32 world_subset_index = 0; world_subset_index < n_worlds; ++world_subset_index)
 	{
 		world_subsets[world_subset_index].n_tiles = 0;
@@ -193,21 +192,19 @@ void compute_world_subsets(World *true_world, World world_subsets[8], Client cli
 World generate_world()
 {
 	World result = {};
-	u32 tiles_on_side = 10;
+	i32 tiles_on_side = 4;
 	result.n_tiles = tiles_on_side * tiles_on_side;	
 	result.tile_size = 720 / 4;
 
 	for (u32 i_tile = 0; i_tile < result.n_tiles; ++i_tile)
 	{
-		u32 y_level = i_tile / tiles_on_side; 
-		u32 x_level = i_tile % tiles_on_side;
-		IVec2 origin_coordinates = (IVec2(x_level, y_level) - IVec2(tiles_on_side / 2)) * (int)result.tile_size;
-		LOG_UINT(origin_coordinates.x);
-		LOG_UINT(origin_coordinates.y);
+		i32 y_level = -(i32)i_tile / tiles_on_side + tiles_on_side / 2; 
+		i32 x_level = i_tile % tiles_on_side - tiles_on_side / 2;
+		IVec2 origin_coordinates = IVec2(x_level, y_level) * (int)result.tile_size;
 
-		u32 r = lerp(100, 255, (float)i_tile / result.n_tiles);
+		u32 r = lerp(70, 255, (float)i_tile / result.n_tiles);
 		result.tiles[i_tile].color = pack_color(r, 25, 50, 255);
-		result.tiles[i_tile].center_position = origin_coordinates + IVec2((int)result.tile_size / 2);
+		result.tiles[i_tile].center_position = origin_coordinates + IVec2(result.tile_size / 2);
 	}
 
 	return result;

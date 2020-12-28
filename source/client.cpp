@@ -69,8 +69,7 @@ u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 		}
 	}
 
-	if (event->type == SDL_KEYUP)
-	{
+	if (event->type == SDL_KEYUP) {
 		if (event->key.keysym.sym == SDLK_UP)
 		{
 			recognize_client_key_release(client, KEYUP);
@@ -109,34 +108,44 @@ void handle_mouse_for_client(struct Client *client, SDL_Event *event)
 	}
 }
 
-void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, 
+void draw_colored_rectangle(u32* pixels, u32 window_width, u32 window_height, i32 x_center, i32 y_center, 
 		u32 width, u32 height, u32 color)
 {
-	u32 x_start = x_center - width / 2;
-	u32 y_start = y_center - height / 2; 
+	i32 x_start = x_center - width / 2;
+	i32 y_start = y_center - height / 2; 
+	if (x_start < 0) x_start = 0;
+	if (y_start < 0) y_start = 0;
+
+	
 	u32 *pixel_start = pixels + y_start * window_width + x_start;
 	for (u32 y = y_start; y < y_start + height; ++y)
 	{
+		if (y >= window_height) break;
+
 		u32 *pixel = pixel_start;
 		for (u32 x = x_start; x < x_start + width; ++x)
 		{
+			if (x >= window_width) break;
+
 			*pixel++ = color;
 		}
 		pixel_start += window_width;
 	}
 }
 
-void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)
+void render_tiles(struct World *world_subset, u32 window_width, u32 window_height, u32* pixels)
 {
-	struct Tile *current_tile = world_subset->tiles;
-	for (u32 tile_index = 0; tile_index < world_subset->n_tiles; ++tile_index)
+	Tile *current_tile = world_subset->tiles;
+	for (u32 tile_index = 0; tile_index < world_subset->n_tiles; ++tile_index, ++current_tile)
 	{
-		IVec2 relative_position = current_tile->center_position - IVec2(-800);
-		draw_colored_rectangle(pixels, window_width, 
+		i32 camera_radius = 160;
+		IVec2 relative_position = current_tile->center_position - IVec2(-camera_radius, camera_radius);
+		LOG_INT(current_tile->center_position.x);
+		LOG_INT(current_tile->center_position.y);
+
+		draw_colored_rectangle(pixels, window_width, window_height,
 				relative_position.x, relative_position.y,
 				world_subset->tile_size, world_subset->tile_size, current_tile->color);
-
-		++current_tile;	
 	}
 }
 
@@ -145,7 +154,7 @@ void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_t
 {
 	memset(pixels, 0xffffffff, window_width * window_height * sizeof(u32));
 
-	render_tiles(world_subset, window_width, pixels);
+	render_tiles(world_subset, window_width, window_height, pixels);
 
 	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
 	// apparently slower, but locking results in a segfault.

@@ -35,11 +35,9 @@ struct Tile
 //TODO(stanisz): this should be serialized to handle endianness
 struct World
 {
-	Tile tiles[100]; //NOTE(stanisz): 4x4 grid?
+	Tile tiles[100]; 
 	u32 n_tiles;
 	u32 tile_size; //NOTE(stanisz): this should be relative for each client - camera!
-	u32 a; //NOTE(stanisz): test value
-
 };
 
 UVec2 get_tile_origin(u32 y_tile, u32 x_tile, u32 tile_size);

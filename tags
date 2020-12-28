@@ -42,7 +42,6 @@ Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const Vec2<T> &to_copy)$/;"	f	class:Vec2
 Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
-a	source/shared.hpp	/^	u32 a; \/\/NOTE(stanisz): test value$/;"	m	struct:World	typeref:typename:u32
 add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
 center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	typeref:typename:IVec2
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct Client *clients, u32 n_clients)$/;"	f	typeref:typename:void
@@ -53,7 +52,7 @@ create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
 disconnected	source/shared.hpp	/^	u32 disconnected;$/;"	m	struct:Client	typeref:typename:u32
-draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 x_center, u32 y_center, $/;"	f	typeref:typename:void
+draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 window_height, i32 x_center, i32 /;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
 elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2	typeref:typename:T[2]
 generate_world	source/server.cpp	/^World generate_world()$/;"	f	typeref:typename:World
@@ -92,7 +91,7 @@ real32	source/utils.hpp	/^typedef float real32;$/;"	t	typeref:typename:float
 real64	source/utils.hpp	/^typedef double real64;$/;"	t	typeref:typename:double
 recognize_client_key_press	source/shared.cpp	/^void recognize_client_key_press(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
 recognize_client_key_release	source/shared.cpp	/^void recognize_client_key_release(struct Client* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, u32 window_width, u32* pixels)$/;"	f	typeref:typename:void
+render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, u32 window_width, u32 window_height, u32* pixels)$/;"	f	typeref:typename:void
 scale_vec2	source/maths.cpp	/^Vec2<T> scale_vec2(const Vec2<T> &a, const T &value)$/;"	f	typeref:typename:Vec2<T>
 send_to_clients	source/server.cpp	/^void send_to_clients(struct Client *clients, struct World worlds[8], $/;"	f	typeref:typename:void
 sender	source/server.cpp	/^void* sender(void *work_pass)$/;"	f	typeref:typename:void *
@@ -103,7 +102,7 @@ sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32
 sock	source/shared.hpp	/^	i32 sock;$/;"	m	struct:Client	typeref:typename:i32
 subtract_vec2	source/maths.cpp	/^Vec2<T> subtract_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
 tile_size	source/shared.hpp	/^	u32 tile_size; \/\/NOTE(stanisz): this should be relative for each client - camera!$/;"	m	struct:World	typeref:typename:u32
-tiles	source/shared.hpp	/^	Tile tiles[100]; \/\/NOTE(stanisz): 4x4 grid?$/;"	m	struct:World	typeref:typename:Tile[100]
+tiles	source/shared.hpp	/^	Tile tiles[100]; $/;"	m	struct:World	typeref:typename:Tile[100]
 u16	source/utils.hpp	/^typedef uint16_t u16; $/;"	t	typeref:typename:uint16_t
 u32	source/utils.hpp	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
 u64	source/utils.hpp	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
