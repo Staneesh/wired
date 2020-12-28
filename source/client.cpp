@@ -138,10 +138,14 @@ void render_tiles(struct World *world_subset, u32 window_width, u32 window_heigh
 	Tile *current_tile = world_subset->tiles;
 	for (u32 tile_index = 0; tile_index < world_subset->n_tiles; ++tile_index, ++current_tile)
 	{
-		i32 camera_radius = 160;
-		IVec2 relative_position = current_tile->center_position - IVec2(-camera_radius, camera_radius);
+		IVec2 relative_position = current_tile->center_position - IVec2(-100, 100);
+		relative_position.y *= -1;
+
 		LOG_INT(current_tile->center_position.x);
 		LOG_INT(current_tile->center_position.y);
+		
+		LOG_INT(relative_position.x);
+		LOG_INT(relative_position.y);
 
 		draw_colored_rectangle(pixels, window_width, window_height,
 				relative_position.x, relative_position.y,
@@ -154,7 +158,9 @@ void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_t
 {
 	memset(pixels, 0xffffffff, window_width * window_height * sizeof(u32));
 
+	LOG_STRING("VISIBLE_TILES:");
 	render_tiles(world_subset, window_width, window_height, pixels);
+	LOG_HERE;
 
 	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
 	// apparently slower, but locking results in a segfault.
