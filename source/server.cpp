@@ -192,7 +192,7 @@ void compute_world_subsets(World *true_world, World world_subsets[8], Client cli
 World generate_world()
 {
 	World result = {};
-	i32 tiles_on_side = 2;
+	i32 tiles_on_side = 10;
 	result.n_tiles = tiles_on_side * tiles_on_side;	
 	result.tile_size = 50;
 
@@ -200,15 +200,12 @@ World generate_world()
 	{
 		i32 y_level = -(i32)i_tile / tiles_on_side + tiles_on_side / 2; 
 		i32 x_level = i_tile % tiles_on_side - tiles_on_side / 2;
-		LOG_INT(x_level);
-		LOG_INT(y_level);
 
 		IVec2 origin_coordinates = IVec2(x_level, y_level) * (int)result.tile_size;
-		LOG_INT(origin_coordinates.x);
-		LOG_INT(origin_coordinates.y);
 
-		u32 r = lerp(70, 255, (float)i_tile / result.n_tiles);
-		result.tiles[i_tile].color = pack_color(r, 25, 50, 255);
+		float color_factor = (float)i_tile / result.n_tiles;
+		u32 r = lerp(70, 255, color_factor);
+		result.tiles[i_tile].color = pack_color(r, 0, 255 - r, 255);
 		result.tiles[i_tile].center_position = origin_coordinates + IVec2(result.tile_size / 2, -(i32)result.tile_size/2);
 	}
 
