@@ -22,7 +22,7 @@ struct ListenerWork
 {
 	u32 port;
 	i32 sock;
-	Client client_data;
+	ClientInput client_data;
 };
 
 struct SenderWork
@@ -30,6 +30,11 @@ struct SenderWork
 	u32 port;
 	i32 sock;
 	World world_subset;
+};
+
+struct ClientParams
+{
+
 };
 
 void* listener(void *work_pass)
@@ -42,7 +47,7 @@ void* listener(void *work_pass)
 	return nullptr;
 }
 
-void listen_to_clients(struct Client *clients, const u32 n_listeners)
+void listen_to_clients(struct ClientInput *client_inputs, const u32 n_listeners)
 {
 	struct ListenerWork works[n_listeners];
 
@@ -51,7 +56,7 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 	for(u32 i = 0; i < n_listeners; ++i)
 	{
 		works[i].port = 9002 + i;
-		works[i].sock = clients[i].sock;
+		works[i].sock = client_inputs[i].sock;
 
 		pthread_create(&thread_ids[i], 0, &listener, &works[i]);
 	}
@@ -66,11 +71,11 @@ void listen_to_clients(struct Client *clients, const u32 n_listeners)
 		//TODO(stanisz): copying a struct normally doesnt work apparently.
 		// I have to store old values of sock and port, because setting them
 		// causes the following send to fail.
-		u32 old_port = clients[i].port;
-		u32 old_sock = clients[i].sock;
-		clients[i] = works[i].client_data;
-		clients[i].sock = old_sock;
-		clients[i].port = old_port;
+		u32 old_port = client_inputs[i].port;
+		u32 old_sock = client_inputs[i].sock;
+		client_inputs[i] = works[i].client_data;
+		client_inputs[i].sock = old_sock;
+		client_inputs[i].port = old_port;
 		//FIXME(stanisz): why?
 	}
 }
@@ -86,7 +91,7 @@ void* sender(void *work_pass)
 	return nullptr;
 }
 
-void send_to_clients(struct Client *clients, struct World worlds[8], 
+void send_to_clients(struct ClientInput *client_inputs, struct World worlds[8], 
 		const u32 n_clients)
 {
 	struct SenderWork works[n_clients];
@@ -96,7 +101,7 @@ void send_to_clients(struct Client *clients, struct World worlds[8],
 	for(u32 i = 0; i < n_clients; ++i)
 	{
 		works[i].port = 9002 + i;
-		works[i].sock = clients[i].sock;
+		works[i].sock = client_inputs[i].sock;
 		works[i].world_subset = worlds[i];
 
 		pthread_create(&thread_ids[i], 0, &sender, &works[i]);
@@ -108,7 +113,7 @@ void send_to_clients(struct Client *clients, struct World worlds[8],
 	}
 }
 
-void setup_sockets(struct Client *clients, u32 n_clients)
+void setup_sockets(struct ClientInput *client_inputs, u32 n_clients)
 {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
@@ -138,14 +143,14 @@ void setup_sockets(struct Client *clients, u32 n_clients)
 		//NOTE(stanisz): Accept happens here, so before everything starts
 		// the clients need to all be accepted. Right...?
 		assert(
-				(clients[i].sock = accept(sock, 
+				(client_inputs[i].sock = accept(sock, 
 					(struct sockaddr *)&client_address, 
 					&len)) != -1
 				);
 	}
 }
 
-void cleanup_sockets(struct Client *clients, u32 n_clients)
+void cleanup_sockets(struct ClientInput *clients, u32 n_clients)
 {
 	//RESEARCH(stanisz): Is it okay to close sockets, that
 	// are 0 (not created at all)?
@@ -154,13 +159,9 @@ void cleanup_sockets(struct Client *clients, u32 n_clients)
 		close(clients[i].sock);
 	}
 }
-void print_clients(struct Client clients[8], u32 n_clients) {
+void print_clients(struct ClientInput clients[8], u32 n_clients) {
 	for (u32 i = 0; i < n_clients; ++i)
 	{
-		if (clients[i].disconnected != 0)
-		{
-			LOG("Client disconnected.");
-		}
 		if (clients[i].keys_pressed_mask != 0)
 		{
 			LOG_UINT(clients[i].keys_pressed_mask);
@@ -169,7 +170,7 @@ void print_clients(struct Client clients[8], u32 n_clients) {
 }
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subsets(World *true_world, World world_subsets[8], Client clients[8], u32 n_worlds)
+void compute_world_subsets(World *true_world, World world_subsets[8], ClientInput client_inputs[8], u32 n_worlds)
 {
 	u32 CLIENT_INITIAL_VISIBILITY = 1600;
 	for (u32 world_subset_index = 0; world_subset_index < n_worlds; ++world_subset_index)
@@ -222,8 +223,8 @@ int main(int argc, char** argv)
 		n_clients = atoi(argv[1]);
 	}
 
-	Client clients[8];
-	setup_sockets(clients, n_clients);
+	ClientInput client_inputs[8];
+	setup_sockets(client_inputs, n_clients);
 
 	World true_world = generate_world();
 
@@ -231,13 +232,13 @@ int main(int argc, char** argv)
 
 	while(1)
 	{
-		listen_to_clients(clients, n_clients);
+		listen_to_clients(client_inputs, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subsets(&true_world, world_subsets, clients, n_clients);
-		send_to_clients(clients, world_subsets, n_clients);
+		compute_world_subsets(&true_world, world_subsets, client_inputs, n_clients);
+		send_to_clients(client_inputs, world_subsets, n_clients);
 	}
 	
-	cleanup_sockets(clients, n_clients);
+	cleanup_sockets(client_inputs, n_clients);
 
 	return 0;
 }

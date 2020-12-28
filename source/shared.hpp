@@ -11,11 +11,12 @@ enum KeyIndex
 };
 
 //TODO(stanisz): this should be serialized to handle endianness
-struct Client
+struct ClientInput
 {
+	//RESEARCH(stanisz): port and sock are stored in sender and receiver works. What do i need them
+	// here for? Maybe listeners and senders could use these values?
 	i32 port;
 	i32 sock;
-	u32 disconnected;
 	//NOTE(stanisz): Uses KeyPressMsg for setting and getting
 	// the data about each specific key.
 	u32 keys_pressed_mask;
@@ -23,8 +24,8 @@ struct Client
 	i32 mouse_y;
 };
 
-void recognize_client_key_press(Client* client, enum KeyIndex m);
-void recognize_client_key_release(Client* client, enum KeyIndex m);
+void recognize_client_key_press(ClientInput* client, enum KeyIndex m);
+void recognize_client_key_release(ClientInput* client, enum KeyIndex m);
 
 struct Tile
 {

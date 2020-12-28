@@ -15,22 +15,20 @@
 #include "maths.cpp"
 #include "shared.cpp"
 
-void setup_socket(struct Client* client)
+void setup_socket(struct ClientInput* client_input)
 {
-	client->sock = socket(AF_INET, SOCK_STREAM, 0); 
-	assert(client->sock != -1);
+	client_input->sock = socket(AF_INET, SOCK_STREAM, 0); 
+	assert(client_input->sock != -1);
 
 	struct sockaddr_in server_address;
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(client->port);
+	server_address.sin_port = htons(client_input->port);
 	server_address.sin_addr.s_addr = INADDR_ANY;
 
-	i32 connection_status = connect(client->sock, 
+	i32 connection_status = connect(client_input->sock, 
 			(struct sockaddr *)&server_address, sizeof(server_address));
 
 	assert(connection_status != -1);
-
-	client->disconnected = 0;
 }
 
 void init_sdl(SDL_Window *window)
@@ -39,12 +37,11 @@ void init_sdl(SDL_Window *window)
 }
 
 //TODO(stanisz): cleanup this code, its one million LOC 
-u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
+u8 handle_keyboard_for_client(struct ClientInput *client_input, SDL_Event *event)
 {
 	u8 result = 1;
 	if (event->type == SDL_QUIT)
 	{
-		client->disconnected = 1;
 		result = 0;
 		return result;
 	}
@@ -53,58 +50,58 @@ u8 handle_keyboard_for_client(struct Client *client, SDL_Event *event)
 	{
 		if (event->key.keysym.sym == SDLK_UP)
 		{
-			recognize_client_key_press(client, KEYUP);
+			recognize_client_key_press(client_input, KEYUP);
 		}
 		if (event->key.keysym.sym == SDLK_DOWN)
 		{
-			recognize_client_key_press(client, KEYDOWN);
+			recognize_client_key_press(client_input, KEYDOWN);
 		}
 		if (event->key.keysym.sym == SDLK_LEFT)
 		{
-			recognize_client_key_press(client, KEYLEFT);
+			recognize_client_key_press(client_input, KEYLEFT);
 		}
 		if (event->key.keysym.sym == SDLK_RIGHT)
 		{
-			recognize_client_key_press(client, KEYRIGHT);
+			recognize_client_key_press(client_input, KEYRIGHT);
 		}
 	}
 
 	if (event->type == SDL_KEYUP) {
 		if (event->key.keysym.sym == SDLK_UP)
 		{
-			recognize_client_key_release(client, KEYUP);
+			recognize_client_key_release(client_input, KEYUP);
 		}
 		if (event->key.keysym.sym == SDLK_DOWN)
 		{
-			recognize_client_key_release(client, KEYDOWN);
+			recognize_client_key_release(client_input, KEYDOWN);
 		}
 		if (event->key.keysym.sym == SDLK_LEFT)
 		{
-			recognize_client_key_release(client, KEYLEFT);
+			recognize_client_key_release(client_input, KEYLEFT);
 		}
 		if (event->key.keysym.sym == SDLK_RIGHT)
 		{
-			recognize_client_key_release(client, KEYRIGHT);
+			recognize_client_key_release(client_input, KEYRIGHT);
 		}
 	}
 
 	return result;
 }
 
-void handle_mouse_for_client(struct Client *client, SDL_Event *event)
+void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event)
 {
 	if (event->type == SDL_MOUSEBUTTONDOWN)
 	{
-		recognize_client_key_press(client, MOUSEPRESSED);
+		recognize_client_key_press(client_input, MOUSEPRESSED);
 	}
 	if (event->type == SDL_MOUSEBUTTONUP)
 	{
-		recognize_client_key_release(client, MOUSEPRESSED);
+		recognize_client_key_release(client_input, MOUSEPRESSED);
 	}
 	if (event->type == SDL_MOUSEMOTION)
 	{
-		client->mouse_x = event->motion.x;
-		client->mouse_y = event->motion.y;
+		client_input->mouse_x = event->motion.x;
+		client_input->mouse_y = event->motion.y;
 	}
 }
 
@@ -174,15 +171,14 @@ int main(int argc, char** argv)
 	UNUSED(argc);
 	UNUSED(argv);
 
-	struct Client client = {};
+	struct ClientInput client_input = {};
 	
-	client.disconnected = 1;
-	client.port = 9002;
+	client_input.port = 9002;
 	if (argc > 1)
 	{
-		client.port = atoi(argv[1]);
+		client_input.port = atoi(argv[1]);
 	}
-	setup_socket(&client);
+	setup_socket(&client_input);
 
 	//NOTE(stanisz): This contains only the data visible to the client.
 	// Some elements are not discovered by the client probably, and should
@@ -210,17 +206,17 @@ int main(int argc, char** argv)
 		SDL_Event event;
 		while (SDL_PollEvent(&event) != 0)
 		{
-			is_running = handle_keyboard_for_client(&client, &event);
-			handle_mouse_for_client(&client, &event);
+			is_running = handle_keyboard_for_client(&client_input, &event);
+			handle_mouse_for_client(&client_input, &event);
 		}
 
 		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, window_width, window_height);
 
-		send(client.sock, &client, sizeof(client), 0);
-		recv(client.sock, &world_subset, sizeof(world_subset), 0);
+		send(client_input.sock, &client_input, sizeof(client_input), 0);
+		recv(client_input.sock, &world_subset, sizeof(world_subset), 0);
 	}
 
-	close(client.sock);
+	close(client_input.sock);
 
 	SDL_Quit();
 
