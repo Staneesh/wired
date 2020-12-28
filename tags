@@ -8,7 +8,6 @@
 !_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 Building 🛠️	README.md	/^## Building 🛠️ $/;"	s
 ClientInput	source/shared.hpp	/^struct ClientInput$/;"	s
-ClientParams	source/server.cpp	/^struct ClientParams$/;"	s	file:
 DVec2	source/maths.hpp	/^using DVec2 = Vec2<double>;$/;"	t	typeref:typename:Vec2<double>
 Dependencies ↘️	README.md	/^## Dependencies ↘️ $/;"	s
 FVec2	source/maths.hpp	/^using FVec2 = Vec2<float>;$/;"	t	typeref:typename:Vec2<float>
@@ -44,13 +43,12 @@ Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
 add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-camera_position	source/server.cpp	/^	UVec2 camera_position;$/;"	m	struct:ClientParams	typeref:typename:UVec2	file:
 camera_position	source/shared.hpp	/^	UVec2 camera_position;$/;"	m	struct:World	typeref:typename:UVec2
 center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	typeref:typename:IVec2
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct ClientInput *clients, u32 n_clients)$/;"	f	typeref:typename:void
 client_data	source/server.cpp	/^	ClientInput client_data;$/;"	m	struct:ListenerWork	typeref:typename:ClientInput	file:
 color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, World world_subsets[8], ClientInput client_inputs[/;"	f	typeref:typename:void
+compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds, $/;"	f	typeref:typename:void
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
@@ -78,11 +76,11 @@ mouse_x	source/shared.hpp	/^	i32 mouse_x;$/;"	m	struct:ClientInput	typeref:typen
 mouse_y	source/shared.hpp	/^	i32 mouse_y;$/;"	m	struct:ClientInput	typeref:typename:i32
 n_tiles	source/shared.hpp	/^	u32 n_tiles;$/;"	m	struct:World	typeref:typename:u32
 operator *	source/maths.cpp	/^Vec2<T> operator*(const Vec2<T> &a, const T &value)$/;"	f	typeref:typename:Vec2<T>
-operator *=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator*=(const T &value)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
+operator *=	source/maths.cpp	/^void Vec2<T>::operator*=(const T &value)$/;"	f	class:Vec2	typeref:typename:void
 operator +	source/maths.cpp	/^Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-operator +=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator+=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
+operator +=	source/maths.cpp	/^void Vec2<T>::operator+=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
 operator -	source/maths.cpp	/^Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-operator -=	source/maths.cpp	/^Vec2<T> Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:Vec2<T>
+operator -=	source/maths.cpp	/^void Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
 operator =	source/maths.cpp	/^void Vec2<T>::operator=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
 pack_color	source/shared.cpp	/^u32 pack_color(u8 r, u8 g, u8 b, u8 a)$/;"	f	typeref:typename:u32
 port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
@@ -93,7 +91,7 @@ real32	source/utils.hpp	/^typedef float real32;$/;"	t	typeref:typename:float
 real64	source/utils.hpp	/^typedef double real64;$/;"	t	typeref:typename:double
 recognize_client_key_press	source/shared.cpp	/^void recognize_client_key_press(struct ClientInput* client, enum KeyIndex m)$/;"	f	typeref:typename:void
 recognize_client_key_release	source/shared.cpp	/^void recognize_client_key_release(struct ClientInput* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, u32 window_width, u32 window_height, u32* pixels)$/;"	f	typeref:typename:void
+render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, const FVec2 &camera_position, $/;"	f	typeref:typename:void
 scale_vec2	source/maths.cpp	/^Vec2<T> scale_vec2(const Vec2<T> &a, const T &value)$/;"	f	typeref:typename:Vec2<T>
 send_to_clients	source/server.cpp	/^void send_to_clients(struct ClientInput *client_inputs, struct World worlds[8], $/;"	f	typeref:typename:void
 sender	source/server.cpp	/^void* sender(void *work_pass)$/;"	f	typeref:typename:void *
@@ -109,6 +107,7 @@ u16	source/utils.hpp	/^typedef uint16_t u16; $/;"	t	typeref:typename:uint16_t
 u32	source/utils.hpp	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
 u64	source/utils.hpp	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
 u8	source/utils.hpp	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
+update_camera_position	source/client.cpp	/^void update_camera_position(const ClientInput &input, FVec2 *camera_position, float delta_time)$/;"	f	typeref:typename:void
 wired	README.md	/^# wired$/;"	c
 world_subset	source/server.cpp	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
 x	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anonb617c4380108	typeref:typename:T

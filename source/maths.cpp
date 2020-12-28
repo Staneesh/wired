@@ -62,21 +62,21 @@ Vec2<T> operator*(const Vec2<T> &a, const T &value)
 }
 
 template<typename T>
-Vec2<T> Vec2<T>::operator+=(const Vec2<T> &other)
+void Vec2<T>::operator+=(const Vec2<T> &other)
 {
-	return add_vec2(*this, other);
+	*this = add_vec2(*this, other);
 }
 
 template<typename T>
-Vec2<T> Vec2<T>::operator-=(const Vec2<T> &other)
+void Vec2<T>::operator-=(const Vec2<T> &other)
 {
-	return subtract_vec2(*this, other);
+	*this = subtract_vec2(*this, other);
 }
 
 template<typename T>
-Vec2<T> Vec2<T>::operator*=(const T &value)
+void Vec2<T>::operator*=(const T &value)
 {
-	return scale_vec2(*this, value);
+	*this = scale_vec2(*this, value);
 }
 
 template<typename T>

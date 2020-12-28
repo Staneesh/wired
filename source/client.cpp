@@ -130,12 +130,46 @@ void draw_colored_rectangle(u32* pixels, u32 window_width, u32 window_height, i3
 	}
 }
 
-void render_tiles(struct World *world_subset, u32 window_width, u32 window_height, u32* pixels)
+void update_camera_position(const ClientInput &input, FVec2 *camera_position, float delta_time)
+{
+	float camera_speed = 1;
+	FVec2 camera_movement = FVec2(0.0f);
+
+	if (input.keys_pressed_mask & (1<<KEYUP))
+	{
+		camera_movement += FVec2(0, 1);
+	}
+	if (input.keys_pressed_mask & (1<<KEYDOWN))
+	{
+		camera_movement += FVec2(0, -1);
+	}
+	if (input.keys_pressed_mask & (1<<KEYLEFT))
+	{
+		camera_movement += FVec2(-1, 0);
+	}
+	if (input.keys_pressed_mask & (1<<KEYRIGHT))
+	{
+		camera_movement += FVec2(1, 0);
+	}
+
+	float movement_len = length_vec2(camera_movement);
+
+	if (movement_len > 0.5f)
+	{
+		camera_movement *= 1.0f / length_vec2(camera_movement);	
+	}	
+
+	*camera_position += camera_movement * camera_speed * delta_time;
+}
+
+void render_tiles(struct World *world_subset, const FVec2 &camera_position, 
+		u32 window_width, u32 window_height, u32* pixels)
 {
 	Tile *current_tile = world_subset->tiles;
 	for (u32 tile_index = 0; tile_index < world_subset->n_tiles; ++tile_index, ++current_tile)
 	{
-		IVec2 relative_position = current_tile->center_position - IVec2(-720/2, 720/2);
+		IVec2 truncated_camera_pos = IVec2(camera_position.x, camera_position.y);
+		IVec2 relative_position = current_tile->center_position - IVec2(-720/2, 720/2) - truncated_camera_pos;
 		relative_position.y *= -1;
 
 		draw_colored_rectangle(pixels, window_width, window_height,
@@ -145,11 +179,12 @@ void render_tiles(struct World *world_subset, u32 window_width, u32 window_heigh
 }
 
 void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, 
-		u32 *pixels, SDL_Renderer *renderer, u32 window_width, u32 window_height)
+		u32 *pixels, SDL_Renderer *renderer, u32 window_width, u32 window_height,
+		const FVec2 &camera_position)
 {
 	memset(pixels, 0xffffffff, window_width * window_height * sizeof(u32));
 
-	render_tiles(world_subset, window_width, window_height, pixels);
+	render_tiles(world_subset, camera_position, window_width, window_height, pixels);
 
 	//NOTE(stanisz): shouldnt this be done using streaming texture, locking and unlocking? this is 
 	// apparently slower, but locking results in a segfault.
@@ -201,6 +236,11 @@ int main(int argc, char** argv)
 
 	u32 *pixels = (u32*)malloc(sizeof(u32) * window_width * window_height);
 
+	FVec2 camera_position = FVec2(0.0f);
+
+	u64 last_time = SDL_GetPerformanceCounter();
+	float delta_time = 0;
+
 	while (is_running)
 	{
 		SDL_Event event;
@@ -210,10 +250,18 @@ int main(int argc, char** argv)
 			handle_mouse_for_client(&client_input, &event);
 		}
 
-		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, window_width, window_height);
+		update_camera_position(client_input, &camera_position, delta_time);
+		LOG_FLOAT(camera_position.x);
+
+		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, 
+				window_width, window_height, camera_position);
 
 		send(client_input.sock, &client_input, sizeof(client_input), 0);
 		recv(client_input.sock, &world_subset, sizeof(world_subset), 0);
+
+		u64 current_time = SDL_GetPerformanceCounter();
+		delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
+		last_time = current_time;
 	}
 
 	close(client_input.sock);

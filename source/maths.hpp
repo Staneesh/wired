@@ -16,9 +16,9 @@ union Vec2
 	void operator=(const Vec2<T> &other);
 	Vec2<T>(){}
 
-	Vec2<T> operator+=(const Vec2<T> &other);
-	Vec2<T> operator-=(const Vec2<T> &other);
-	Vec2<T> operator*=(const T &value);
+	void operator+=(const Vec2<T> &other);
+	void operator-=(const Vec2<T> &other);
+	void operator*=(const T &value);
 
 	Vec2<T>(const T &v1, const T &v2);
 	Vec2<T>(const Vec2<T> &to_copy);
