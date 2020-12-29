@@ -168,8 +168,7 @@ void print_clients(struct ClientInput clients[8], u32 n_clients) {
 
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds, 
-		float delta_time)
+void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds)
 {
 	u32 CLIENT_INITIAL_VISIBILITY = 1600;
 	for (u32 world_subset_index = 0; world_subset_index < n_worlds; ++world_subset_index)
@@ -229,21 +228,12 @@ int main(int argc, char** argv)
 
 	World world_subsets[8] = {};
 
-	u64 last_time = SDL_GetPerformanceCounter();
-	float delta_time = 0;
-	
 	while(1)
 	{
 		listen_to_clients(client_inputs, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subsets(&true_world, world_subsets, n_clients, delta_time);
+		compute_world_subsets(&true_world, world_subsets, n_clients);
 		send_to_clients(client_inputs, world_subsets, n_clients);
-
-
-		u64 current_time = SDL_GetPerformanceCounter();
-		delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
-
-		last_time = current_time;
 	}
 	
 	cleanup_sockets(client_inputs, n_clients);

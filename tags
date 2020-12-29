@@ -48,7 +48,7 @@ center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	ty
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct ClientInput *clients, u32 n_clients)$/;"	f	typeref:typename:void
 client_data	source/server.cpp	/^	ClientInput client_data;$/;"	m	struct:ListenerWork	typeref:typename:ClientInput	file:
 color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds, $/;"	f	typeref:typename:void
+compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds)$/;"	f	typeref:typename:void
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
