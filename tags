@@ -52,7 +52,7 @@ compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
 create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
-draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, u32 window_width, u32 window_height, i32 x_center, i32 /;"	f	typeref:typename:void
+draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, i32 window_width, i32 window_height, i32 x_center, i32 /;"	f	typeref:typename:void
 draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
 elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2	typeref:typename:T[2]
 generate_world	source/server.cpp	/^World generate_world()$/;"	f	typeref:typename:World

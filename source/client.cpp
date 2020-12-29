@@ -105,22 +105,33 @@ void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event)
 	}
 }
 
-void draw_colored_rectangle(u32* pixels, u32 window_width, u32 window_height, i32 x_center, i32 y_center, 
-		u32 width, u32 height, u32 color)
+void draw_colored_rectangle(u32* pixels, i32 window_width, i32 window_height, i32 x_center, i32 y_center, 
+		i32 width, i32 height, u32 color)
 {
 	i32 x_start = x_center - width / 2;
 	i32 y_start = y_center - height / 2; 
-	if (x_start < 0) x_start = 0;
-	if (y_start < 0) y_start = 0;
+	if (x_start + width < 0 || x_start >= window_width) return; 
+	if (y_start + height < 0 || y_start >= window_height) return; 
+
+	if (x_start < 0)
+	{
+		width -= -x_start;
+		x_start = 0;
+	}
+	if (y_start < 0)
+	{
+		height -= -y_start;
+		y_start = 0;
+	}
 
 	
 	u32 *pixel_start = pixels + y_start * window_width + x_start;
-	for (u32 y = y_start; y < y_start + height; ++y)
+	for (i32 y = y_start; y < y_start + height; ++y)
 	{
 		if (y >= window_height) break;
 
 		u32 *pixel = pixel_start;
-		for (u32 x = x_start; x < x_start + width; ++x)
+		for (i32 x = x_start; x < x_start + width; ++x)
 		{
 			if (x >= window_width) break;
 
@@ -251,7 +262,6 @@ int main(int argc, char** argv)
 		}
 
 		update_camera_position(client_input, &camera_position, delta_time);
-		LOG_FLOAT(camera_position.x);
 
 		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, 
 				window_width, window_height, camera_position);
