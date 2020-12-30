@@ -166,22 +166,38 @@ void print_clients(struct ClientInput clients[8], u32 n_clients) {
 	}
 }
 
+void mouse_tile_selection(Tile *current_tile, i32 tile_size, ClientInput *client_input)
+{
+	IVec2 upper_left = current_tile->center_position - IVec2(tile_size/2);
+	IVec2 lower_right = upper_left + IVec2(tile_size);
+	i32 x = client_input->mouse_x;
+	i32 y = client_input->mouse_y;
+
+	if (x > upper_left.x && x < lower_right.x)
+	{
+		if (y > upper_left.y && y < lower_right.y)
+		{
+			current_tile->color = pack_color(0, 0, 0, 255);
+		}
+	}
+}
 
 //NOTE(stanisz): This should probably update already-existing world subsetsdynamically, although i am not sure that everything can be implemented faster that way.
-void compute_world_subsets(World *true_world, World world_subsets[8], u32 n_worlds)
+void compute_world_subsets(World *true_world, ClientInput client_inputs[8], World world_subsets[8], u32 n_worlds)
 {
-	u32 CLIENT_INITIAL_VISIBILITY = 1600;
+	u32 CLIENT_INITIAL_VISIBILITY = 300;
 	for (u32 world_subset_index = 0; world_subset_index < n_worlds; ++world_subset_index)
 	{
 		world_subsets[world_subset_index].n_tiles = 0;
 
 		for (u32 true_world_tile_index = 0; true_world_tile_index < true_world->n_tiles; ++true_world_tile_index)
 		{
-			Tile *current_tile = &true_world->tiles[true_world_tile_index];
+			Tile current_tile = true_world->tiles[true_world_tile_index];
 
-			if (length_vec2(current_tile->center_position) < CLIENT_INITIAL_VISIBILITY)
+			if (length_vec2(current_tile.center_position) < CLIENT_INITIAL_VISIBILITY)
 			{
-				world_subsets[world_subset_index].tiles[world_subsets[world_subset_index].n_tiles++] = *current_tile;
+				mouse_tile_selection(&current_tile, true_world->tile_size, &client_inputs[world_subset_index]);
+				world_subsets[world_subset_index].tiles[world_subsets[world_subset_index].n_tiles++] = current_tile;
 			}
 		}
 
@@ -232,7 +248,7 @@ int main(int argc, char** argv)
 	{
 		listen_to_clients(client_inputs, n_clients);
 		//print_clients(clients, n_clients);
-		compute_world_subsets(&true_world, world_subsets, n_clients);
+		compute_world_subsets(&true_world, client_inputs, world_subsets, n_clients);
 		send_to_clients(client_inputs, world_subsets, n_clients);
 	}
 	
