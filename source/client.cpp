@@ -272,24 +272,20 @@ int main(int argc, char** argv)
 		u64 current_time = SDL_GetPerformanceCounter();
 		delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
 
-		i32 useconds_60fps = 16666;
+		i32 useconds_60fps = 16000;
 		i32 useconds_dt = (i32)(1000.0f * delta_time);
 
 		if (useconds_dt < useconds_60fps)
 		{
-			LOG("Starting sync...");
 			while (useconds_dt < useconds_60fps)
 			{
 				i32 useconds_vsync = useconds_60fps - useconds_dt; 
-				LOG_INT(useconds_vsync);
-				usleep(useconds_vsync);
+				SDL_Delay(useconds_vsync / 1000);
 				
 				current_time = SDL_GetPerformanceCounter();
 				delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
 				useconds_dt = (i32)(1000.0f * delta_time);
 			}
-			LOG_FLOAT(delta_time);
-			LOG("Sync ended.");
 		}
 		else
 		{
