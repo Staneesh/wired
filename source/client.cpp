@@ -88,13 +88,14 @@ u8 handle_keyboard_for_client(struct ClientInput *client_input, SDL_Event *event
 	return result;
 }
 
-void update_mouse_based_on_camera(ClientInput *client_input, FVec2 *camera_position)
+void update_mouse_based_on_camera(ClientInput *client_input, FVec2 *camera_position, i32 window_height)
 {
-	client_input->mouse_x += camera_position->x;
-	client_input->mouse_y += camera_position->y;
+	client_input->mouse_x += camera_position->x - window_height/2;
+	client_input->mouse_y = window_height / 2 - client_input->mouse_y + camera_position->y;
 }
 
-void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event, FVec2 *camera_position)
+void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event, 
+		FVec2 *camera_position, u32 window_height)
 {
 	if (event->type == SDL_MOUSEBUTTONDOWN)
 	{
@@ -108,7 +109,8 @@ void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event,
 	{
 		client_input->mouse_x = event->motion.x;
 		client_input->mouse_y = event->motion.y;
-		update_mouse_based_on_camera(client_input, camera_position);
+		//ROBUSTNESS(stanisz): The world is defined by window height, its not right! i think! what?! 
+		update_mouse_based_on_camera(client_input, camera_position, window_height);
 	}
 }
 
@@ -265,11 +267,10 @@ int main(int argc, char** argv)
 		while (SDL_PollEvent(&event) != 0)
 		{
 			is_running = handle_keyboard_for_client(&client_input, &event);
-			handle_mouse_for_client(&client_input, &event, &camera_position);
+			handle_mouse_for_client(&client_input, &event, &camera_position, window_height);
 		}
 
 		update_camera_position(client_input, &camera_position, delta_time);
-		LOG_INT(client_input.mouse_x);
 
 		draw_visible_world_subset(&world_subset, screen_texture, pixels, renderer, 
 				window_width, window_height, camera_position);
