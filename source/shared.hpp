@@ -31,6 +31,7 @@ struct Tile
 {
 	IVec2 center_position;
 	u32 color;
+	u32 building_type;
 };
 
 //TODO(stanisz): this should be serialized to handle endianness

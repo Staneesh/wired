@@ -178,6 +178,10 @@ void mouse_tile_selection(Tile *current_tile, i32 tile_size, ClientInput *client
 		if (y > upper_left.y && y < lower_right.y)
 		{
 			current_tile->color = pack_color(0, 0, 0, 255);
+			if (client_input->keys_pressed_mask & (1 << MOUSEPRESSED))
+			{
+				current_tile->building_type = 1;
+			}
 		}
 	}
 }

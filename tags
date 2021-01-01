@@ -43,6 +43,7 @@ Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
 __anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
 add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
+building_type	source/shared.hpp	/^	u32 building_type;$/;"	m	struct:Tile	typeref:typename:u32
 camera_position	source/shared.hpp	/^	UVec2 camera_position;$/;"	m	struct:World	typeref:typename:UVec2
 center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	typeref:typename:IVec2
 cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct ClientInput *clients, u32 n_clients)$/;"	f	typeref:typename:void

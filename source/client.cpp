@@ -192,6 +192,11 @@ void render_tiles(struct World *world_subset, const FVec2 &camera_position,
 		IVec2 relative_position = current_tile->center_position - IVec2(-720/2, 720/2) - truncated_camera_pos;
 		relative_position.y *= -1;
 
+		if (current_tile->building_type)
+		{
+			current_tile->color = 0x00ff00ff;
+		}
+
 		draw_colored_rectangle(pixels, window_width, window_height,
 				relative_position.x, relative_position.y,
 				world_subset->tile_size, world_subset->tile_size, current_tile->color);
