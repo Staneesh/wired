@@ -1,117 +1,107 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
-!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
-!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
-!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
-!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
-Building 🛠️	README.md	/^## Building 🛠️ $/;"	s
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ClientInput	source/shared.hpp	/^struct ClientInput$/;"	s
-DVec2	source/maths.hpp	/^using DVec2 = Vec2<double>;$/;"	t	typeref:typename:Vec2<double>
-Dependencies ↘️	README.md	/^## Dependencies ↘️ $/;"	s
-FVec2	source/maths.hpp	/^using FVec2 = Vec2<float>;$/;"	t	typeref:typename:Vec2<float>
-IVec2	source/maths.hpp	/^using IVec2 = Vec2<int>;$/;"	t	typeref:typename:Vec2<int>
 KEYDOWN	source/shared.hpp	/^	KEYDOWN,$/;"	e	enum:KeyIndex
 KEYLEFT	source/shared.hpp	/^	KEYLEFT,$/;"	e	enum:KeyIndex
 KEYRIGHT	source/shared.hpp	/^	KEYRIGHT,$/;"	e	enum:KeyIndex
 KEYUP	source/shared.hpp	/^	KEYUP,$/;"	e	enum:KeyIndex
 KeyIndex	source/shared.hpp	/^enum KeyIndex$/;"	g
-LOG	source/utils.hpp	/^#define LOG(/;"	d
-LOG_FLOAT	source/utils.hpp	/^#define LOG_FLOAT(/;"	d
-LOG_HERE	source/utils.hpp	/^#define LOG_HERE /;"	d
-LOG_HEX	source/utils.hpp	/^#define LOG_HEX(/;"	d
-LOG_INT	source/utils.hpp	/^#define LOG_INT(/;"	d
-LOG_NL	source/utils.hpp	/^#define LOG_NL /;"	d
-LOG_POINTER	source/utils.hpp	/^#define LOG_POINTER(/;"	d
-LOG_STRING	source/utils.hpp	/^#define LOG_STRING(/;"	d
-LOG_UINT	source/utils.hpp	/^#define LOG_UINT(/;"	d
+LOG	source/utils.hpp	32;"	d
+LOG_FLOAT	source/utils.hpp	35;"	d
+LOG_HERE	source/utils.hpp	38;"	d
+LOG_HEX	source/utils.hpp	23;"	d
+LOG_INT	source/utils.hpp	17;"	d
+LOG_NL	source/utils.hpp	41;"	d
+LOG_POINTER	source/utils.hpp	26;"	d
+LOG_STRING	source/utils.hpp	29;"	d
+LOG_UINT	source/utils.hpp	20;"	d
 ListenerWork	source/server.cpp	/^struct ListenerWork$/;"	s	file:
-MATHS_H	source/maths.hpp	/^#define MATHS_H$/;"	d
+MATHS_H	source/maths.hpp	2;"	d
 MOUSEPRESSED	source/shared.hpp	/^	MOUSEPRESSED,$/;"	e	enum:KeyIndex
-SHARED_H	source/shared.hpp	/^#define SHARED_H$/;"	d
+SHARED_H	source/shared.hpp	2;"	d
 SenderWork	source/server.cpp	/^struct SenderWork$/;"	s	file:
 Tile	source/shared.hpp	/^struct Tile$/;"	s
-Trello	README.md	/^## Trello $/;"	s
-UNUSED	source/utils.hpp	/^#define UNUSED(/;"	d
-UTILS_H	source/utils.hpp	/^#define UTILS_H$/;"	d
-UVec2	source/maths.hpp	/^using UVec2 = Vec2<unsigned>;$/;"	t	typeref:typename:Vec2<unsigned>
+UNUSED	source/utils.hpp	42;"	d
+UTILS_H	source/utils.hpp	2;"	d
 Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const T &v1, const T &v2)$/;"	f	class:Vec2
 Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const T &x_and_y)$/;"	f	class:Vec2
 Vec2	source/maths.cpp	/^Vec2<T>::Vec2(const Vec2<T> &to_copy)$/;"	f	class:Vec2
+Vec2	source/maths.hpp	/^	Vec2<T>(){}$/;"	f	union:Vec2
 Vec2	source/maths.hpp	/^union Vec2$/;"	u
 World	source/shared.hpp	/^struct World$/;"	s
-__anonb617c4380108	source/maths.hpp	/^	{$/;"	s	union:Vec2
-add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-building_type	source/shared.hpp	/^	u32 building_type;$/;"	m	struct:Tile	typeref:typename:u32
-camera_position	source/shared.hpp	/^	UVec2 camera_position;$/;"	m	struct:World	typeref:typename:UVec2
-center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile	typeref:typename:IVec2
-cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct ClientInput *clients, u32 n_clients)$/;"	f	typeref:typename:void
-client_data	source/server.cpp	/^	ClientInput client_data;$/;"	m	struct:ListenerWork	typeref:typename:ClientInput	file:
-color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile	typeref:typename:u32
-compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, ClientInput client_inputs[8], World world_subsets[/;"	f	typeref:typename:void
-create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f	typeref:typename:Vec2<T>
-create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f	typeref:typename:Vec2<T>
-create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f	typeref:typename:Vec2<T>
-draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, i32 window_width, i32 window_height, i32 x_center, i32 /;"	f	typeref:typename:void
-draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f	typeref:typename:void
-elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2	typeref:typename:T[2]
-generate_world	source/server.cpp	/^World generate_world()$/;"	f	typeref:typename:World
-get_tile_center	source/shared.cpp	/^UVec2 get_tile_center(u32 x_tile, u32 y_tile, u32 tile_size)$/;"	f	typeref:typename:UVec2
-get_tile_origin	source/shared.cpp	/^UVec2 get_tile_origin(u32 x_tile, u32 y_tile, u32 tile_size)$/;"	f	typeref:typename:UVec2
-handle_keyboard_for_client	source/client.cpp	/^u8 handle_keyboard_for_client(struct ClientInput *client_input, SDL_Event *event)$/;"	f	typeref:typename:u8
-handle_mouse_for_client	source/client.cpp	/^void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event, $/;"	f	typeref:typename:void
-i16	source/utils.hpp	/^typedef int16_t i16; $/;"	t	typeref:typename:int16_t
-i32	source/utils.hpp	/^typedef int32_t i32; $/;"	t	typeref:typename:int32_t
-i64	source/utils.hpp	/^typedef int64_t i64; $/;"	t	typeref:typename:int64_t
-i8	source/utils.hpp	/^typedef int8_t i8; $/;"	t	typeref:typename:int8_t
-init_sdl	source/client.cpp	/^void init_sdl(SDL_Window *window)$/;"	f	typeref:typename:void
-keys_pressed_mask	source/shared.hpp	/^	u32 keys_pressed_mask;$/;"	m	struct:ClientInput	typeref:typename:u32
-length_vec2	source/maths.cpp	/^float length_vec2(const Vec2<T> &a)$/;"	f	typeref:typename:float
-lerp	source/shared.cpp	/^T lerp(const T &v1, const T &v2, float t)$/;"	f	typeref:typename:T
-listen_to_clients	source/server.cpp	/^void listen_to_clients(struct ClientInput *client_inputs, const u32 n_listeners)$/;"	f	typeref:typename:void
-listener	source/server.cpp	/^void* listener(void *work_pass)$/;"	f	typeref:typename:void *
-main	source/client.cpp	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
-main	source/server.cpp	/^int main(int argc, char** argv)$/;"	f	typeref:typename:int
-mouse_tile_selection	source/server.cpp	/^void mouse_tile_selection(Tile *current_tile, i32 tile_size, ClientInput *client_input)$/;"	f	typeref:typename:void
-mouse_x	source/shared.hpp	/^	i32 mouse_x;$/;"	m	struct:ClientInput	typeref:typename:i32
-mouse_y	source/shared.hpp	/^	i32 mouse_y;$/;"	m	struct:ClientInput	typeref:typename:i32
-n_tiles	source/shared.hpp	/^	u32 n_tiles;$/;"	m	struct:World	typeref:typename:u32
-operator *	source/maths.cpp	/^Vec2<T> operator*(const Vec2<T> &a, const T &value)$/;"	f	typeref:typename:Vec2<T>
-operator *=	source/maths.cpp	/^void Vec2<T>::operator*=(const T &value)$/;"	f	class:Vec2	typeref:typename:void
-operator +	source/maths.cpp	/^Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-operator +=	source/maths.cpp	/^void Vec2<T>::operator+=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
-operator -	source/maths.cpp	/^Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-operator -=	source/maths.cpp	/^void Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
-operator =	source/maths.cpp	/^void Vec2<T>::operator=(const Vec2<T> &other)$/;"	f	class:Vec2	typeref:typename:void
-pack_color	source/shared.cpp	/^u32 pack_color(u8 r, u8 g, u8 b, u8 a)$/;"	f	typeref:typename:u32
-port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	typeref:typename:u32	file:
-port	source/server.cpp	/^	u32 port;$/;"	m	struct:SenderWork	typeref:typename:u32	file:
-port	source/shared.hpp	/^	i32 port;$/;"	m	struct:ClientInput	typeref:typename:i32
-print_clients	source/server.cpp	/^void print_clients(struct ClientInput clients[8], u32 n_clients) {$/;"	f	typeref:typename:void
-real32	source/utils.hpp	/^typedef float real32;$/;"	t	typeref:typename:float
-real64	source/utils.hpp	/^typedef double real64;$/;"	t	typeref:typename:double
-recognize_client_key_press	source/shared.cpp	/^void recognize_client_key_press(struct ClientInput* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-recognize_client_key_release	source/shared.cpp	/^void recognize_client_key_release(struct ClientInput* client, enum KeyIndex m)$/;"	f	typeref:typename:void
-render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, const FVec2 &camera_position, $/;"	f	typeref:typename:void
-scale_vec2	source/maths.cpp	/^Vec2<T> scale_vec2(const Vec2<T> &a, const T &value)$/;"	f	typeref:typename:Vec2<T>
-send_to_clients	source/server.cpp	/^void send_to_clients(struct ClientInput *client_inputs, struct World worlds[8], $/;"	f	typeref:typename:void
-sender	source/server.cpp	/^void* sender(void *work_pass)$/;"	f	typeref:typename:void *
-setup_socket	source/client.cpp	/^void setup_socket(struct ClientInput* client_input)$/;"	f	typeref:typename:void
-setup_sockets	source/server.cpp	/^void setup_sockets(struct ClientInput *client_inputs, u32 n_clients)$/;"	f	typeref:typename:void
-sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:ListenerWork	typeref:typename:i32	file:
-sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:SenderWork	typeref:typename:i32	file:
-sock	source/shared.hpp	/^	i32 sock;$/;"	m	struct:ClientInput	typeref:typename:i32
-subtract_vec2	source/maths.cpp	/^Vec2<T> subtract_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f	typeref:typename:Vec2<T>
-tile_size	source/shared.hpp	/^	u32 tile_size; \/\/NOTE(stanisz): this should be relative for each client - camera!$/;"	m	struct:World	typeref:typename:u32
-tiles	source/shared.hpp	/^	Tile tiles[100]; $/;"	m	struct:World	typeref:typename:Tile[100]
-u16	source/utils.hpp	/^typedef uint16_t u16; $/;"	t	typeref:typename:uint16_t
-u32	source/utils.hpp	/^typedef uint32_t u32; $/;"	t	typeref:typename:uint32_t
-u64	source/utils.hpp	/^typedef uint64_t u64; $/;"	t	typeref:typename:uint64_t
-u8	source/utils.hpp	/^typedef uint8_t u8; $/;"	t	typeref:typename:uint8_t
-update_camera_position	source/client.cpp	/^void update_camera_position(const ClientInput &input, FVec2 *camera_position, float delta_time)$/;"	f	typeref:typename:void
-update_mouse_based_on_camera	source/client.cpp	/^void update_mouse_based_on_camera(ClientInput *client_input, FVec2 *camera_position, i32 window_/;"	f	typeref:typename:void
-wired	README.md	/^# wired$/;"	c
-world_subset	source/server.cpp	/^	World world_subset;$/;"	m	struct:SenderWork	typeref:typename:World	file:
-x	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anonb617c4380108	typeref:typename:T
-y	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anonb617c4380108	typeref:typename:T
+add_vec2	source/maths.cpp	/^Vec2<T> add_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f
+building_type	source/shared.hpp	/^	u32 building_type;$/;"	m	struct:Tile
+camera_position	source/shared.hpp	/^	UVec2 camera_position;$/;"	m	struct:World
+center_position	source/shared.hpp	/^	IVec2 center_position;$/;"	m	struct:Tile
+cleanup_sockets	source/server.cpp	/^void cleanup_sockets(struct ClientInput *clients, u32 n_clients)$/;"	f
+client_data	source/server.cpp	/^	ClientInput client_data;$/;"	m	struct:ListenerWork	file:
+color	source/shared.hpp	/^	u32 color;$/;"	m	struct:Tile
+compute_world_subsets	source/server.cpp	/^void compute_world_subsets(World *true_world, ClientInput client_inputs[8], World world_subsets[8], u32 n_worlds)$/;"	f
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x, const T &y)$/;"	f
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const T &x_and_y)$/;"	f
+create_vec2	source/maths.cpp	/^Vec2<T> create_vec2(const Vec2<T>& to_copy)$/;"	f
+draw_colored_rectangle	source/client.cpp	/^void draw_colored_rectangle(u32* pixels, i32 window_width, i32 window_height, i32 x_center, i32 y_center, $/;"	f
+draw_visible_world_subset	source/client.cpp	/^void draw_visible_world_subset(struct World *world_subset, SDL_Texture *screen_texture, $/;"	f
+elements	source/maths.hpp	/^	T elements[2];$/;"	m	union:Vec2
+generate_world	source/server.cpp	/^World generate_world()$/;"	f
+get_tile_center	source/shared.cpp	/^UVec2 get_tile_center(u32 x_tile, u32 y_tile, u32 tile_size)$/;"	f
+get_tile_origin	source/shared.cpp	/^UVec2 get_tile_origin(u32 x_tile, u32 y_tile, u32 tile_size)$/;"	f
+handle_keyboard_for_client	source/client.cpp	/^u8 handle_keyboard_for_client(struct ClientInput *client_input, SDL_Event *event)$/;"	f
+handle_mouse_for_client	source/client.cpp	/^void handle_mouse_for_client(struct ClientInput *client_input, SDL_Event *event, $/;"	f
+i16	source/utils.hpp	/^typedef int16_t i16; $/;"	t
+i32	source/utils.hpp	/^typedef int32_t i32; $/;"	t
+i64	source/utils.hpp	/^typedef int64_t i64; $/;"	t
+i8	source/utils.hpp	/^typedef int8_t i8; $/;"	t
+init_sdl	source/client.cpp	/^void init_sdl(SDL_Window *window)$/;"	f
+keys_pressed_mask	source/shared.hpp	/^	u32 keys_pressed_mask;$/;"	m	struct:ClientInput
+length_vec2	source/maths.cpp	/^float length_vec2(const Vec2<T> &a)$/;"	f
+lerp	source/shared.cpp	/^T lerp(const T &v1, const T &v2, float t)$/;"	f
+listen_to_clients	source/server.cpp	/^void listen_to_clients(struct ClientInput *client_inputs, const u32 n_listeners)$/;"	f
+listener	source/server.cpp	/^void* listener(void *work_pass)$/;"	f
+main	source/client.cpp	/^int main(int argc, char** argv)$/;"	f
+main	source/server.cpp	/^int main(int argc, char** argv)$/;"	f
+mouse_tile_selection	source/server.cpp	/^void mouse_tile_selection(Tile *current_tile, i32 tile_size, ClientInput *client_input)$/;"	f
+mouse_x	source/shared.hpp	/^	i32 mouse_x;$/;"	m	struct:ClientInput
+mouse_y	source/shared.hpp	/^	i32 mouse_y;$/;"	m	struct:ClientInput
+n_tiles	source/shared.hpp	/^	u32 n_tiles;$/;"	m	struct:World
+operator *	source/maths.cpp	/^Vec2<T> operator*(const Vec2<T> &a, const T &value)$/;"	f
+operator *=	source/maths.cpp	/^void Vec2<T>::operator*=(const T &value)$/;"	f	class:Vec2
+operator +	source/maths.cpp	/^Vec2<T> operator+(const Vec2<T> &a, const Vec2<T> &b)$/;"	f
+operator +=	source/maths.cpp	/^void Vec2<T>::operator+=(const Vec2<T> &other)$/;"	f	class:Vec2
+operator -	source/maths.cpp	/^Vec2<T> operator-(const Vec2<T> &a, const Vec2<T> &b)$/;"	f
+operator -=	source/maths.cpp	/^void Vec2<T>::operator-=(const Vec2<T> &other)$/;"	f	class:Vec2
+operator =	source/maths.cpp	/^void Vec2<T>::operator=(const Vec2<T> &other)$/;"	f	class:Vec2
+pack_color	source/shared.cpp	/^u32 pack_color(u8 r, u8 g, u8 b, u8 a)$/;"	f
+port	source/server.cpp	/^	u32 port;$/;"	m	struct:ListenerWork	file:
+port	source/server.cpp	/^	u32 port;$/;"	m	struct:SenderWork	file:
+port	source/shared.hpp	/^	i32 port;$/;"	m	struct:ClientInput
+print_clients	source/server.cpp	/^void print_clients(struct ClientInput clients[8], u32 n_clients) {$/;"	f
+real32	source/utils.hpp	/^typedef float real32;$/;"	t
+real64	source/utils.hpp	/^typedef double real64;$/;"	t
+recognize_client_key_press	source/shared.cpp	/^void recognize_client_key_press(struct ClientInput* client, enum KeyIndex m)$/;"	f
+recognize_client_key_release	source/shared.cpp	/^void recognize_client_key_release(struct ClientInput* client, enum KeyIndex m)$/;"	f
+render_tiles	source/client.cpp	/^void render_tiles(struct World *world_subset, const FVec2 &camera_position, $/;"	f
+scale_vec2	source/maths.cpp	/^Vec2<T> scale_vec2(const Vec2<T> &a, const T &value)$/;"	f
+send_to_clients	source/server.cpp	/^void send_to_clients(struct ClientInput *client_inputs, struct World worlds[8], $/;"	f
+sender	source/server.cpp	/^void* sender(void *work_pass)$/;"	f
+setup_socket	source/client.cpp	/^void setup_socket(struct ClientInput* client_input)$/;"	f
+setup_sockets	source/server.cpp	/^void setup_sockets(struct ClientInput *client_inputs, u32 n_clients)$/;"	f
+sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:ListenerWork	file:
+sock	source/server.cpp	/^	i32 sock;$/;"	m	struct:SenderWork	file:
+sock	source/shared.hpp	/^	i32 sock;$/;"	m	struct:ClientInput
+subtract_vec2	source/maths.cpp	/^Vec2<T> subtract_vec2(const Vec2<T> &a, const Vec2<T> &b)$/;"	f
+tile_size	source/shared.hpp	/^	u32 tile_size; \/\/NOTE(stanisz): this should be relative for each client - camera!$/;"	m	struct:World
+tiles	source/shared.hpp	/^	Tile tiles[100]; $/;"	m	struct:World
+u16	source/utils.hpp	/^typedef uint16_t u16; $/;"	t
+u32	source/utils.hpp	/^typedef uint32_t u32; $/;"	t
+u64	source/utils.hpp	/^typedef uint64_t u64; $/;"	t
+u8	source/utils.hpp	/^typedef uint8_t u8; $/;"	t
+update_camera_position	source/client.cpp	/^void update_camera_position(const ClientInput &input, FVec2 *camera_position, float delta_time)$/;"	f
+update_mouse_based_on_camera	source/client.cpp	/^void update_mouse_based_on_camera(ClientInput *client_input, FVec2 *camera_position, i32 window_height)$/;"	f
+world_subset	source/server.cpp	/^	World world_subset;$/;"	m	struct:SenderWork	file:
+x	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anon1
+y	source/maths.hpp	/^		T x, y;$/;"	m	struct:Vec2::__anon1

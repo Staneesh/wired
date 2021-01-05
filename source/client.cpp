@@ -294,7 +294,10 @@ int main(int argc, char** argv)
 			while (useconds_dt < useconds_60fps)
 			{
 				i32 useconds_vsync = useconds_60fps - useconds_dt; 
-				SDL_Delay(useconds_vsync / 1000);
+				UNUSED(useconds_vsync);
+				//FIXME(stanisz): this causes frames to be missing! dont enforce framerate
+				// for now.
+				//SDL_Delay((float)useconds_vsync / 1000);
 				
 				current_time = SDL_GetPerformanceCounter();
 				delta_time = (current_time - last_time) * 1000.0f / SDL_GetPerformanceFrequency();
